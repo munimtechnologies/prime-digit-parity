@@ -6,6 +6,8 @@ These are the tests the publish lane runs before committing.  They verify:
   * the even-base exact-balance fact on complete ranges [0, b**k) (Fact 2),
   * the sharper |excess| <= 1 bound and its closed form at every cutoff (Fact 3),
   * the base-10 last-digit localization of the prime bias (Fact 4),
+  * casting out (b-1)'s and the odd-base degeneracy (Fact 5),
+  * the bounded coprime-to-10 control for the base-10 prime bias (Fact 6),
   * the sieve, by cross-checking a known prime count.
 
 Run: python -m unittest -v
@@ -127,6 +129,61 @@ class TestBase10Localization(unittest.TestCase):
                 core.digit_sum_parity(p, 10),
                 1 ^ core.digit_sum_parity(p // 10, 10),
             )
+
+
+class TestCoprime10Control(unittest.TestCase):
+    """Fact 6: the base-10 parity excess over integers ending in 1,3,7,9 is
+    bounded by 8 at every cutoff and has the stated closed form."""
+
+    def test_closed_form_matches_bruteforce(self):
+        for X in range(0, 3000):
+            self.assertEqual(
+                core.coprime10_parity_excess_closed(X),
+                core.coprime10_parity_excess(X),
+                f"X={X}",
+            )
+
+    def test_bounded_by_eight(self):
+        for X in range(0, 3000):
+            self.assertLessEqual(abs(core.coprime10_parity_excess_closed(X)), 8)
+
+    def test_bounded_far_out(self):
+        for X in (10**6 + 7, 10**9 + 3, 5 * 10**12 + 9, 10**15 - 1, 123456789012345):
+            self.assertLessEqual(abs(core.coprime10_parity_excess_closed(X)), 8)
+
+    def test_primes_are_a_subset(self):
+        # every prime p > 5 is counted by the control set (Fact 4)
+        for p in core.primes_upto(5000):
+            if p > 5:
+                self.assertIn(p % 10, (1, 3, 7, 9))
+
+
+class TestCastingOut(unittest.TestCase):
+    """Fact 5: s_b(n) == n (mod b-1) for all n (casting out (b-1)'s), so the
+    digit-sum parity is degenerate exactly when b is odd."""
+
+    def test_casting_out_general(self):
+        # b == 1 (mod b-1) gives s_b(n) == n (mod b-1); vacuous only for b = 2.
+        for b in (3, 4, 7, 9, 10, 16):
+            for n in range(0, 3000):
+                self.assertEqual(
+                    core.digit_sum(n, b) % (b - 1), n % (b - 1),
+                    f"casting out failed base {b}, n={n}",
+                )
+
+    def test_parity_degenerate_flag(self):
+        for b in (3, 5, 7, 9, 11, 15):
+            self.assertTrue(core.parity_degenerate(b))
+        for b in (2, 4, 6, 8, 10, 16):
+            self.assertFalse(core.parity_degenerate(b))
+
+    def test_degenerate_bases_force_prime_parity(self):
+        # Consistency with Fact 1: in a degenerate (odd) base every prime p > 2
+        # has odd digit sum, because s_b(p) == p == 1 (mod 2).
+        for b in (3, 9, 15):
+            for p in core.primes_upto(5000):
+                if p > 2:
+                    self.assertEqual(core.digit_sum_parity(p, b), 1)
 
 
 class TestSieve(unittest.TestCase):

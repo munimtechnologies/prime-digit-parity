@@ -29,6 +29,22 @@ Facts proved in NOTES.md and exercised by the tests:
    so s_10(p) mod 2 = 1 XOR (s_10(floor(p/10)) mod 2): the whole base-10 prime
    parity bias is carried by the high-order digits (the "beheaded" prime).
 
+5. Casting out (b-1)'s, and the degeneracy of odd bases.  Because b == 1
+   (mod b-1), for every n we have s_b(n) == n (mod b-1).  Hence the digit-sum
+   residue modulo any d dividing (b-1) is fixed by n itself.  For parity this
+   means: when b is odd (so 2 | b-1) the digit-sum parity equals n's parity and
+   carries no information (this is Fact 1); when b is even (b-1 odd) parity is
+   NON-degenerate.  Base 10 has b-1 = 9 (odd), so it is a non-degenerate case --
+   exactly the regime in which Mauduit & Rivat (Ann. of Math. 171, 2010) proved
+   the digit-sum parity of primes equidistributes.  See RESOLUTION.md.
+
+6. A bounded control for the base-10 prime bias.  Integers (not only primes) whose
+   last digit is in {1,3,7,9} -- i.e. coprime to 10 -- have a base-10 digit-sum
+   parity excess over [0, X) of at most 8 in absolute value at EVERY X (closed form
+   in ``coprime10_parity_excess_closed``).  Primes p > 5 are a subset of these
+   integers (Fact 4), so any prime excess that grows like sqrt(n) is a property of
+   the primes inside that bounded ambient set, not of the ambient set itself.
+
 Work by Munim, Inc.  Produced with AI (see README.md).  Apache-2.0.
 """
 
@@ -51,6 +67,20 @@ def digit_sum(n: int, base: int) -> int:
 def digit_sum_parity(n: int, base: int) -> int:
     """Return s_base(n) mod 2 (0 for even digit sum, 1 for odd)."""
     return digit_sum(n, base) & 1
+
+
+def parity_degenerate(base: int) -> bool:
+    """True if digit-sum parity is trivially fixed by n's parity (Fact 5).
+
+    By casting out (base-1)'s, s_base(n) == n (mod base-1) for every n (because
+    base == 1 mod base-1).  When base-1 is even -- i.e. base is odd -- this forces
+    s_base(n) == n (mod 2), so every prime p > 2 has digit-sum parity 1 and the
+    statistic carries no information.  When base is even (base-1 is odd), parity
+    is non-degenerate: the regime of the Mauduit-Rivat equidistribution theorem.
+    """
+    if base < 2:
+        raise ValueError("base must be >= 2")
+    return base % 2 == 1
 
 
 def primes_upto(limit: int) -> list[int]:
@@ -120,3 +150,36 @@ def integer_parity_excess_closed(limit_exclusive: int, base: int) -> int:
         return 0
     # t odd: the majority parity in the partial block equals s_b(q) mod 2.
     return 1 if (digit_sum(q, base) & 1) else -1
+
+
+_COPRIME10_DIGITS = (1, 3, 7, 9)
+
+
+def coprime10_parity_excess(limit_exclusive: int) -> int:
+    """Brute force: odd-minus-even base-10 digit-sum parity excess over the
+    integers n in [0, X) whose last digit is in {1,3,7,9}."""
+    exc = 0
+    for n in range(max(limit_exclusive, 0)):
+        if n % 10 in _COPRIME10_DIGITS:
+            exc += 1 if digit_sum_parity(n, 10) else -1
+    return exc
+
+
+def coprime10_parity_excess_closed(limit_exclusive: int) -> int:
+    """Closed form of ``coprime10_parity_excess`` (Fact 6).
+
+    Write n = 10*m + d with d in {1,3,7,9}.  Every such d is odd, so
+    s_10(n) = s_10(m) + d has parity 1 XOR s_10(m).  Write X = 10*M + r.  Each
+    complete block m < M contributes 4 integers, all of parity 1 XOR s_10(m): the
+    excess over those blocks is 4 * (#even s_10(m) - #odd s_10(m)) = -4 * E(M),
+    where E(M) in {-1,0,1} is the integer excess of Fact 3.  The partial block
+    m = M contributes c = #{d in {1,3,7,9} : d < r} integers, each of parity
+    1 XOR s_10(M).  Hence |excess| <= 4 + 4 = 8 for every X.
+    """
+    if limit_exclusive <= 0:
+        return 0
+    m_top, r = divmod(limit_exclusive, 10)
+    full = -4 * integer_parity_excess_closed(m_top, 10)
+    c = sum(1 for d in _COPRIME10_DIGITS if d < r)
+    partial = c * (1 if digit_sum_parity(m_top, 10) == 0 else -1)
+    return full + partial

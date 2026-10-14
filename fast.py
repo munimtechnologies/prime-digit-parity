@@ -70,6 +70,7 @@ def run(limit: int, bases, value_checkpoints, count_step: int, seg: int = 10_000
     cum_odd = {b: 0 for b in bases}
     value_rows = []
     count_rows = []
+    seg_rows = []
     next_count = count_step
 
     for pr in segmented_primes(limit, seg):
@@ -112,6 +113,26 @@ def run(limit: int, bases, value_checkpoints, count_step: int, seg: int = 10_000
         for b in bases:
             cum_odd[b] += int(pref[b][-1])
 
+        # trajectory: running excess at the end of every segment
+        seg_rows.append(
+            {
+                "x": seg_max,
+                "n": cum_count,
+                "excess": {b: 2 * cum_odd[b] - cum_count for b in bases},
+            }
+        )
+
+    # value checkpoints beyond the largest prime (e.g. x = limit = 10**k, which is
+    # composite, so no segment's last prime reaches it): totals are final
+    while vi < len(vpts):
+        v = vpts[vi]
+        row = {"x": v, "n": cum_count, "odd": {}, "excess": {}}
+        for b in bases:
+            row["odd"][b] = cum_odd[b]
+            row["excess"][b] = 2 * cum_odd[b] - cum_count
+        value_rows.append(row)
+        vi += 1
+
     # final totals as one more row
     final = {"x": limit, "n": cum_count, "odd": {}, "excess": {}}
     for b in bases:
@@ -123,5 +144,6 @@ def run(limit: int, bases, value_checkpoints, count_step: int, seg: int = 10_000
         "bases": bases,
         "value_checkpoints": value_rows,
         "count_checkpoints": count_rows,
+        "segment_checkpoints": seg_rows,
         "final": final,
     }

@@ -8,12 +8,13 @@ Outputs in OUT:
     summary.json   derived z-scores and the value-vs-count comparison
     summary.txt    human-readable summary
 
-The headline question (see NOTES.md / README.md): the finite-sample base-10
+The headline question (see NOTES.md / RESOLUTION.md): the finite-sample base-10
 prime digit-sum parity bias reported by Gupta & Sridhar (arXiv:1812.11841) was
 measured at a PRIME-COUNT cutoff (first 50,000,000 primes).  Integer digit-sum
 parity is exactly balanced only at VALUE cutoffs x = b**k.  Does the prime bias
-look the same at value cutoffs x = 10**k as at count cutoffs?  This job measures
-both so a later write-up can answer it with verified numbers.
+look the same at value cutoffs x = 10**k as at count cutoffs, and does the
+fair-coin z grow (consistent with the Mauduit-Rivat power-saving error term)?
+This job measures both so RESULTS can answer it with verified numbers.
 
 Work by Munim, Inc.  Produced with AI (see README.md).  Apache-2.0.
 """
@@ -59,6 +60,20 @@ def z_scores(rows, bases):
     return out
 
 
+def max_abs_z(rows, bases, min_n=10_000):
+    """Per base, the checkpoint with the largest |z| among rows with n >= min_n."""
+    out = {}
+    for b in bases:
+        best = None
+        for r in rows:
+            if r["n"] >= min_n:
+                z = r["z"][b]
+                if best is None or abs(z) > abs(best["z"]):
+                    best = {"z": z, "n": r["n"], "x": r["x"]}
+        out[b] = best
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-dir", required=True)
@@ -89,6 +104,11 @@ def main():
         "bases": bases,
         "value_cutoffs_z": z_scores(res["value_checkpoints"], bases),
         "count_cutoffs_z": z_scores(res["count_checkpoints"], bases),
+        "trajectory_z": z_scores(res["segment_checkpoints"], bases),
+        "max_abs_z": max_abs_z(
+            z_scores(res["count_checkpoints"] + res["segment_checkpoints"], bases),
+            bases,
+        ),
         "final": res["final"],
         "note": (
             "excess = #(odd digit-sum primes) - #(even). z = excess/sqrt(n); "
@@ -111,6 +131,21 @@ def main():
                 f"  x={r['x']:>13} n={r['n']:>10}  base10 excess={b10:>8} "
                 f"z={z10:+.2f}  base2 excess={b2:>8} z={z2:+.2f}"
             )
+    lines.append("")
+    lines.append("VALUE cutoffs x = 10^k, z for every base (cross-base table):")
+    lines.append("  " + "x".rjust(14) + "".join(f"  base{b:>3}" for b in bases))
+    for r in summary["value_cutoffs_z"]:
+        if r["x"] in (10**k for k in range(1, 11)):
+            lines.append(
+                "  " + str(r["x"]).rjust(14)
+                + "".join(f"  {r['z'][b]:>+7.2f}" for b in bases)
+            )
+    lines.append("")
+    lines.append("Largest |z| seen (count and segment checkpoints, n >= 10000):")
+    for b in bases:
+        m = summary["max_abs_z"][b]
+        if m is not None:
+            lines.append(f"  base {b:>2}: z={m['z']:+.2f} at n={m['n']} (x={m['x']})")
     lines.append("")
     lines.append("COUNT cutoffs (first N primes):")
     for r in summary["count_cutoffs_z"]:

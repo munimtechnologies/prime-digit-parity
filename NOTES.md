@@ -2,6 +2,14 @@
 
 *Munim, Inc. — research note. Produced with AI. Apache-2.0 (code) / CC BY 4.0 (text).*
 
+> **v0.1.2 update (correction).** An earlier draft of this note (labelled v0.2.0)
+> said the Gupta & Sridhar "peculiarity" is *explained* by the Mauduit–Rivat
+> theorem. That over-read the theorem: it gives density 1/2 (so no limiting bias)
+> and only an *upper* bound on the error term, which cannot predict a bias of a few
+> sigma at 5·10^7 primes. The honest status is in [`RESOLUTION.md`](RESOLUTION.md):
+> limit statement settled, finite-sample lean open and under measurement. This note
+> keeps the elementary facts (now six, all tested) that bound the integer side.
+
 ## Background and prior art
 
 For an integer `n` and base `b`, let `s_b(n)` be the sum of its base-`b` digits.
@@ -14,20 +22,19 @@ The parity `s_b(n) mod 2` of primes has a well-studied history:
   for all `n > 6`; this race (OEIS A130911) is verified to **10^19**
   (B. Chaffin, Jun 2026; T. D. Noe to 10^13 earlier). So base 2 is thoroughly mapped.
 - **Base 10**. Gupta & Sridhar, *A Peculiarity in the Parity of Primes*
-  (arXiv:1812.11841), report that over the **first 50,000,000 primes** the digit
-  sum is "significantly more likely to be odd than even," with the odd count
+  (arXiv:1812.11841, math.GM), report that over the **first 50,000,000 primes** the
+  digit sum is "significantly more likely to be odd than even," with the odd count
   about *an order of magnitude farther from the mean than expected* — a bias they
   say they have no explanation for, persisting across bases (with the leading
   parity possibly changing).
 - Navarrete-Pedraza (OEIS A380192, 2025) shows prime digit sums are approximately
   normal and uniform mod `n`, consistent with Mauduit–Rivat.
 
-**What appears to be missing**, and what this note targets: a clean separation of
-the *sampling convention* from the *arithmetic*. Gupta & Sridhar measured a
-**prime-count cutoff** ("first N primes"), not a **value cutoff** (`primes ≤ x`).
-We did not find a prior study that isolates this. Pinning down exactly how much of
-the reported anomaly the convention can account for turns out to need two facts
-beyond the ones we started with, both proved below.
+**What Mauduit–Rivat gives for base 10.** The theorem is not restricted to base 2:
+it gives equidistribution of `s_q(p)` for every base `q` outside the casting-out
+degeneracies, base 10 included (`q−1 = 9` is odd, so parity is non-degenerate).
+So there is no limiting bias; the finite-sample excess is a lower-order term whose
+size the theorem only upper-bounds. Honest limits in [`RESOLUTION.md`](RESOLUTION.md).
 
 ## Facts we can prove directly (no computation)
 
@@ -66,18 +73,16 @@ the Thue–Morse ±1 summatory function, `s(2N)=0`, `s(2N+1)=±1`. The even-`b`
 version is the elementary *full-range* case; it is distinct from the much-studied
 sums of `(-1)^{s_b(n)}` restricted to **arithmetic progressions** — the
 generalized-Thue–Morse "Newman phenomenon" of Drmota & Stoll (Discrete Math. 308,
-2008) — which can grow fractally with `N`. We did not find the full-range even-`b`
-bound stated explicitly, but it is elementary and likely folklore.) The
-closed form is `core.integer_parity_excess_closed` and is tested against brute
-force for `b ∈ {2,4,6,8,10,16}` and all `X < 2000`.
+2008) — which can grow fractally with `N`.) The closed form is
+`core.integer_parity_excess_closed` and is tested against brute force for
+`b ∈ {2,4,6,8,10,16}` and all `X < 2000`.
 
-> **Consequence for the hypothesis below.** v0.1.0 claimed a prime-count cutoff
-> "lands deep inside a decade — precisely where the boundary term is largest and
-> uncontrolled." Fact 3 shows that is wrong for the *integers*: the integer
-> boundary term is never larger than 1, at any cutoff. So the choice of cutoff
-> **cannot** inflate a large bias *through the ambient integers*. Whatever the
-> reported base-10 prime bias is, it is a property of the primes, not of where
-> the integer range is cut.
+> **Consequence.** v0.1.0 claimed a prime-count cutoff "lands deep inside a decade
+> — precisely where the boundary term is largest and uncontrolled." Fact 3 shows
+> that is wrong for the *integers*: the integer boundary term is never larger than
+> 1, at any cutoff. So the choice of cutoff **cannot** inflate a large bias
+> *through the ambient integers*. Whatever the reported base-10 prime bias is, it
+> is a property of the primes, not of where the integer range is cut.
 
 **Fact 4 — the base-10 bias lives in the high-order digits.** Every prime `p > 5`
 ends in a units digit from `{1,3,7,9}`, all **odd**. Since
@@ -96,49 +101,69 @@ anomaly is therefore not about the last digit at all — it is about how
 prime's units digit is only guaranteed *coprime* to `b`, not odd, so Fact 4 is
 special to base 10 (and base 2, where it gives `s_2(p) = 1 XOR s_2(⌊p/2⌋)`).
 
-Facts 1–4 are all exercised by `test_core.py` with no third-party dependencies.
+**Fact 5 — casting out (b−1)'s pins the degeneracy.** Because `b ≡ 1 (mod b−1)`,
+for every `n` we have `s_b(n) ≡ n (mod b−1)`. Hence the digit-sum residue modulo
+any `d` dividing `b−1` is fixed by `n` itself. For parity: when `b` is odd,
+`2 | (b−1)` forces `s_b(n) ≡ n (mod 2)`, which is Fact 1 (degenerate); when `b` is
+even, `b−1` is odd and parity is **non-degenerate**. Base 10 has `b−1 = 9`, so it
+is non-degenerate — exactly the condition `(q−1)/2 ∉ ℤ` under which the
+Mauduit–Rivat theorem gives equidistribution of `s_10(p) mod 2`. (`core.parity_degenerate`;
+the general congruence is tested for `b ∈ {3,4,7,9,10,16}` and all `n < 3000`.)
 
-## The hypothesis this repo tests (revised at v0.1.1)
+**Fact 6 — a bounded control (new in v0.1.2).** Write an integer coprime to 10 as
+`n = 10m + d`, `d ∈ {1,3,7,9}`. Every such `d` is odd, so `s_10(n) ≡ s_10(m) + 1
+(mod 2)`. With `X = 10M + r`, each complete block `m < M` contributes four integers
+of parity `1 XOR s_10(m)`, so the excess over those blocks is `−4·E(M)` where
+`E(M) ∈ {−1,0,1}` is Fact 3's integer excess; the partial block `m = M` adds at most
+four more. Hence the odd−even excess over the integers `< X` coprime to 10 satisfies
+`|E| ≤ 8` for **every** `X` (closed form `core.coprime10_parity_excess_closed`,
+checked against brute force for all `X < 3000` and bounded far out). Primes `> 5` live
+inside this set, so any `√n`-scale prime excess is a property of the primes, measured
+against an ambient set that is balanced to within a constant.
+
+Facts 1–6 are all exercised by `test_core.py` with no third-party dependencies.
+
+## The question this repo asked, and where it stands
 
 The excess over primes `≤ x` is, as a sequence, *identical* to the excess over the
-first `π(x)` primes — the two conventions index the same running total, so they
-can only differ in how that total is **normalized** against an "expected"
-standard deviation. Fact 3 removes the ambient integers as a source of inflation.
-That leaves a sharp, falsifiable question about the primes themselves:
+first `π(x)` primes — the two conventions index the same running total and differ
+only in how it is **normalized**. Facts 3 and 5 remove the ambient integers and
+the odd bases as sources of inflation. That left a sharp question about base 10:
 
-> **Hypothesis H (revised).** Under a fair-coin null, the base-10 prime excess
-> `excess(x) = odd − even` should have `z(x) = excess(x)/√π(x) = O(1)`. The
-> Gupta–Sridhar "order of magnitude farther than expected" claim is tested by
-> measuring `z(x)` at value cutoffs `x = 10^k` up to `10^9`. If `|z(10^k)|` stays
-> `O(1)` and oscillates in sign, the "peculiarity" is an artefact of an
-> **under-estimated variance** at a single count cutoff (`N = 5·10^7`), not a
-> growing bias. If instead `|z(10^k)|` grows with `k` and keeps one sign, a
-> genuine arithmetic bias survives at round cutoffs — a real positive result,
-> which Fact 4 would then localize entirely in the beheaded primes `⌊p/10⌋`.
+> Under a fair-coin null, the base-10 prime excess `excess(x) = odd − even` would
+> have `z(x) = excess(x)/√π(x) = O(1)`. Does the Gupta–Sridhar "order of magnitude"
+> hold up at value cutoffs `x = 10^k`?
 
-Base 2 is the control: its race is known (odious lead, verified to `10^19`), so
-the pipeline must reproduce a positive, slowly growing base-2 excess.
+**Status (honest).** By Mauduit–Rivat, `|excess(x)| = O(x^{1−σ})` with `σ > 0`, so
+the parity classes have density 1/2 and any bias is lower-order. But `z(x)` is only
+*permitted* to be large (up to `x^{1/2−σ}(log x)^{1/2}`); the theorem does not say it
+is, and it does not explain a few-sigma bias at 5·10^7 primes. Whether `z` stays
+O(1) and changes sign (a single-cutoff fluctuation) or keeps one sign and grows (a
+real secondary term, like Chebyshev-type bias in prime races) is the open empirical
+question; the queued computation answers it (value cutoffs `10^k`, count cutoffs
+including `N = 5·10^7`, a per-segment trajectory, all six bases). Readings are
+pre-registered in [`RESOLUTION.md`](RESOLUTION.md) §5.
 
 ## Method
 
-`fast.py` streams primes to `10^9` with a segmented sieve and computes, for bases
-`{2,4,6,8,10,16}`, the odd-minus-even excess at value cutoffs `10^k` and at
-prime-count cutoffs every `10^6` primes. `job.py` reports `z = excess/√n` at both.
+`fast.py` streams primes with a segmented sieve and computes, for bases
+`{2,4,6,8,10,16}`, the odd-minus-even excess at value cutoffs `10^k`, at
+prime-count cutoffs every `10^6` primes, and at the end of every segment.
+`job.py` reports `z = excess/√n` at all of these.
 
-**Status: the `10^9` computation is still pending in the sandbox.** This
-repository ships the proved facts (1–4), the tested code, and the queued
-computation. The verified `z(10^k)` table and the verdict on Hypothesis H will be
-added once the job returns. No numeric claim about primes is asserted here before
-it is computed.
+**Status: the computation is queued in the sandbox (`prime-digit-parity-v3`: first
+to `10^9`, then to `10^10`; re-queued at low memory after the original 8 GB request
+would not schedule).** The verified `z(10^k)` table is appended to `RESOLUTION.md`
+once the job returns. No numeric claim about primes is asserted before it is computed.
 
 ## References
 
 - C. Mauduit, J. Rivat, *Sur un problème de Gelfond: la somme des chiffres des
   nombres premiers*, Ann. of Math. 171 (2010) 1591–1646.
+- A. O. Gelfond, Acta Arith. 13 (1968) 259–265.
 - V. Shevelev, arXiv:0706.0786; arXiv:0707.1761.
-- A. Gupta, A. Sridhar, *A Peculiarity in the Parity of Primes*, arXiv:1812.11841.
+- A. D. Gupta, M. Sridhar, *A Peculiarity in the Parity of Primes*, arXiv:1812.11841.
 - E. Navarrete-Pedraza, OEIS A380192 (2025).
 - M. Drmota, T. Stoll, *Newman's phenomenon for generalized Thue–Morse
-  sequences*, Discrete Math. 308 (2008) 1191–1208 (digit-sum sign sums over
-  arithmetic progressions in general bases).
+  sequences*, Discrete Math. 308 (2008) 1191–1208.
 - OEIS A027697, A027699, A130911, A000069, A001969.
