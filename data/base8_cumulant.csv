@@ -1,0 +1,30 @@
+# Base-8 third-joint-cumulant decomposition of the base-2 prime digit-sum bias.
+# Primes p < 1e8 (pi(1e8) = 5761455). A = chi_8(p), B = chi_8(p//2), C = chi_8(p//4),
+# where chi_b(n) = (-1)^(sum of base-b digits of n). Pattern index = (A_bit<<2)|(B_bit<<1)|C_bit,
+# A_bit = (base-8 digit-sum of p) mod 2, etc.; chi = +1 when its parity bit is 0, else -1.
+# Measured in a sealed offline sandbox (job prime-parity-base8-corr-v1).
+# Work by Munim, Inc., produced with AI. Licence: CC BY 4.0.
+quantity,value
+n_primes,5761455
+count_pattern_000,693845
+count_pattern_001,736247
+count_pattern_010,734665
+count_pattern_011,716635
+count_pattern_100,736921
+count_pattern_101,719439
+count_pattern_110,715554
+count_pattern_111,708149
+marginal_a_chi8_p,0.00023067089823664334
+marginal_b_chi8_p_half,0.001987171643274138
+marginal_c_chi8_p_quarter,8.93871426575405e-05
+E_AB,-0.009349200852909552
+E_AC,-0.008549750019743277
+E_BC,-0.008739979744699906
+E_ABC,-0.012238054449787424
+kappa3,-0.01221821278971542
+sum_ABC,-70509
+base2_excess_1e8,70509
+base10_excess_1e7,2967
+base8_excess_1e7,215
+base10_excess_1e8,62627
+base8_excess_1e8,-1329
