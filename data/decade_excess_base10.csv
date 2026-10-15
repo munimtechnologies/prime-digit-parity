@@ -1,0 +1,21 @@
+# Base-10 prime digit-sum parity excess at value cutoffs x = 10^m.
+# excess = (#primes p<=x with odd digit sum) - (#primes p<=x with even digit sum).
+# n = pi(x) = number of primes <= x. z = excess / sqrt(n) (fair-coin null).
+# ratio = excess(10^m) / excess(10^(m-1)); increment = excess(10^m) - excess(10^(m-1)).
+# Rows m=1..9 are from two independent gated sandbox sieves (numpy trajectory-v1 and
+# pure-stdlib dip-confirm-v1), which agree exactly at the 10^8 anchor (62627) and
+# reproduce Gupta & Sridhar's published 64768/9.16 at the 5e7-prime cutoff.
+# The m=10 excess is implied by the published z=98.93 and pi(10^10)=455052511; it is
+# shown for the ratio only and marked derived. Work by Munim, Inc., produced with AI.
+# License: CC BY 4.0.
+m,x,n_primes,excess_base10,z_base10,ratio_vs_prev,increment_vs_prev,source
+1,10,4,2,,,,trajectory-v1
+2,100,25,-1,,,,trajectory-v1
+3,1000,168,6,,,,trajectory-v1
+4,10000,1229,75,,12.500,69,trajectory-v1
+5,100000,9592,112,,1.493,37,trajectory-v1
+6,1000000,78498,1916,6.84,17.107,1804,trajectory-v1
+7,10000000,664579,2967,3.64,1.549,1051,trajectory-v1
+8,100000000,5761455,62627,26.09,21.108,59660,trajectory-v1+dip-confirm-v1
+9,1000000000,50847534,62582,8.78,0.999,-45,dip-confirm-v1
+10,10000000000,455052511,2110371,98.93,33.720,2047789,derived-from-z
