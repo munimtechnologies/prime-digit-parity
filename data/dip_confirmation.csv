@@ -1,0 +1,8 @@
+kind,cutoff,n_primes,largest_prime,base10_excess,base10_z,base8_excess,base8_z,cross_validated,note
+count,30000000,30000000,573259391,184072,33.60679553503031,,,single_run,count-cutoff from anchor-validated stdlib sieve
+count,40000000,40000000,776531401,144770,22.89014684312881,,,single_run,count-cutoff from anchor-validated stdlib sieve
+count,50000000,50000000,982451653,64768,9.159578400778063,,,external_anchor,reproduces Gupta-Sridhar arXiv:1812.11841 exactly (excess 64768 z 9.16)
+count,60000000,60000000,1190494759,167242,21.59084935954736,,,single_run,count-cutoff from anchor-validated stdlib sieve
+count,70000000,70000000,1400305337,252984,30.237371450385222,,,single_run,count-cutoff from anchor-validated stdlib sieve
+value,100000000,5761455,99999989,62627,26.09128815736286,-1329,-0.5536800734688752,internal_anchor,matches numpy job exactly at 1e8 (base10 and base8)
+value,1000000000,50847534,999999937,62582,8.776361236175434,-58698,-8.231677668355529,single_run,base10 raw excess nearly flat vs 1e8 (plateau); base8 now clearly negative
