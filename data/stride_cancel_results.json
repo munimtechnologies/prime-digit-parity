@@ -1,0 +1,150 @@
+{
+  "title": "Stride-cancellation test: base-2 gap parity as XOR of two base-4 streams",
+  "n_max": 100000000,
+  "identity": "P_2(g) = P_4(g) XOR P_4(floor(g/2))",
+  "streams": {
+    "a_base4_even": "P_4(g) (even-position bits) == the base-4 observable",
+    "b_base4_odd": "P_4(floor(g/2)) (odd-position bits)",
+    "x_base2": "P_2(g) = a XOR b (the base-2 observable)"
+  },
+  "null": "exact marginal-preserving permutation null of S^(1), reported as z",
+  "counts": {
+    "primes": {
+      "count": 5761455,
+      "n_gaps": 5761454,
+      "max_gap": 220
+    },
+    "squarefree": {
+      "count": 60792694,
+      "n_gaps": 60792693,
+      "max_gap": 10
+    },
+    "sums_of_two_squares": {
+      "count": 18457847,
+      "n_gaps": 18457846,
+      "max_gap": 60
+    }
+  },
+  "per_sieve": {
+    "primes": {
+      "a_base4_even": {
+        "n_eff": 5761454,
+        "s": -1051924,
+        "S1": 233701,
+        "E_null": 192058.8692232898,
+        "var_null": 5383735.638413054,
+        "z": 17.946967675330797,
+        "marginal_frac_odd": 0.591289802886563
+      },
+      "b_base4_odd": {
+        "n_eff": 5761454,
+        "s": -1176614,
+        "S1": 112031,
+        "E_null": 240289.12554747466,
+        "var_null": 5290894.412612908,
+        "z": -55.75968879558627,
+        "marginal_frac_odd": 0.6021108560443249
+      },
+      "x_base2": {
+        "n_eff": 5761454,
+        "s": 756388,
+        "S1": -166721,
+        "E_null": 99300.80932521548,
+        "var_null": 5564560.902615865,
+        "z": -112.77213250203353,
+        "marginal_frac_odd": 0.43435788951886106
+      }
+    },
+    "squarefree": {
+      "a_base4_even": {
+        "n_eff": 60792693,
+        "s": -21161813,
+        "S1": 6553620,
+        "E_null": 7366383.138418889,
+        "var_null": 46952524.68373078,
+        "z": -118.61360999238858,
+        "marginal_frac_odd": 0.6740489848015122
+      },
+      "b_base4_odd": {
+        "n_eff": 60792693,
+        "s": 6917341,
+        "S1": -16806700,
+        "E_null": 787093.7008430931,
+        "var_null": 59228693.26511459,
+        "z": -2286.0905041844535,
+        "marginal_frac_odd": 0.4431071346025089
+      },
+      "x_base2": {
+        "n_eff": 60792693,
+        "s": -46172485,
+        "S1": 33410900,
+        "E_null": 35068331.48981461,
+        "var_null": 10885233.90622782,
+        "z": -502.36190995296795,
+        "marginal_frac_odd": 0.8797535749896784
+      }
+    },
+    "sums_of_two_squares": {
+      "a_base4_even": {
+        "n_eff": 18457846,
+        "s": -4984192,
+        "S1": 236181,
+        "E_null": 1345885.7244240742,
+        "var_null": 15864209.284726923,
+        "z": -278.6109747603567,
+        "marginal_frac_odd": 0.6350155375659761
+      },
+      "b_base4_odd": {
+        "n_eff": 18457846,
+        "s": -1771912,
+        "S1": -1021697,
+        "E_null": 170098.5953560345,
+        "var_null": 18119213.37431729,
+        "z": -279.98328604335984,
+        "marginal_frac_odd": 0.547998883510026
+      },
+      "x_base2": {
+        "n_eff": 18457846,
+        "s": -2528966,
+        "S1": 445163,
+        "E_null": 346500.3755752432,
+        "var_null": 17771346.973711737,
+        "z": 23.404129386067076,
+        "marginal_frac_odd": 0.5685065310437631
+      }
+    }
+  },
+  "grading": {
+    "P1_sumsq_cancellation": true,
+    "P1_sumsq_falsified_no_signal": false,
+    "P2_primes_both_streams_contribute": true,
+    "P3_squarefree_both_streams_contribute": true,
+    "thresholds": {
+      "P1_stream": 30,
+      "P1_base2": 30,
+      "P2P3_base2": 100,
+      "P2P3_min_stream": 10
+    },
+    "abs_z": {
+      "sums_of_two_squares": {
+        "a": 278.6109747603567,
+        "b": 279.98328604335984,
+        "x_base2": 23.404129386067076
+      },
+      "primes": {
+        "a": 17.946967675330797,
+        "b": 55.75968879558627,
+        "x_base2": 112.77213250203353
+      },
+      "squarefree": {
+        "a": 118.61360999238858,
+        "b": 2286.0905041844535,
+        "x_base2": 502.36190995296795
+      }
+    }
+  },
+  "self_tests": {
+    "all_passed": true
+  },
+  "produced_by": "AI agents working as MV2, Munim, Inc."
+}
