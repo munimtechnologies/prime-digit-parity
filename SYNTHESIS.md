@@ -17,13 +17,17 @@ binary digit sum of each gap. Measure serial memory by the lag-`k` statistic
 permutation null and reported as a `z`-score. Call a sieve **lag-2 unique-quiet** when
 lag 2 is the single quietest lag in `1..8` *and* `|z(2)| ≤ 0.1 × median{|z(k)| : k≠2}`.
 Over four pre-registered perturbation axes we show this signature localizes to
-**exactly the strict squarefree (μ²) sieve**: it needs a multiplicative *indicator*
+**the strict squarefree (μ²) sieve**: it needs a multiplicative *indicator*
 (not merely a multiplicative origin), it needs even integers admitted, and it needs the
-strict exponent cap at *every* prime. It survives neither thinning a congruence class
-(Axis C) nor relaxing the exponent cap at a single prime (Axis D). No proper
-multiplicative relative tested across the four axes reproduces it. This is a synthesis
-of the eleven-step arc in this repository (releases v0.15.0–v0.24.0); the strongest
-result is a chain of decisive *negatives* around one robust positive.
+strict exponent cap — a requirement that holds at every small prime tested so far
+(2, 3, 5, 7). It survives neither thinning a congruence class (Axis C) nor relaxing the
+exponent cap at a single such prime (Axis D). No proper multiplicative relative tested
+across the four axes reproduces it. This is a synthesis of the arc in this repository
+(releases v0.15.0–v0.26.0); the strongest result is a chain of decisive *negatives*
+around one robust positive. One honest tension is carried openly: the destruction ratio
+`r(p)` for squarefree-except-`p` is *monotone decreasing* in `p`, so whether the
+exponent-cap requirement holds at *every* prime (as opposed to every small prime) is a
+live, pre-registered question (Axis D3, below).
 
 ## 1. The object and why it is base-2 specific
 
@@ -60,7 +64,7 @@ the identical observable, null, stride split and scale-free detector.
 | **A — which k-free** | Is it squarefree specifically, or any `k`-free set? | cube-free, 4th-power-free | only **k = 2** keeps it | v0.18.0 |
 | **B — origin vs. indicator** | Does a multiplicative *origin* suffice, or is a multiplicative *indicator* needed? | Liouville λ = +1 level set (A028260) | **absent** (flat): needs an indicator | v0.20.0 |
 | **C — thinning** | Does removing residue classes keep it? | odd squarefree (A056911); squarefree coprime to 3 / 5 / 15 | **absent** both ways | v0.21.0 / v0.23.0 |
-| **D — enlarging** | Does *adding back* a square class keep it? | squarefree-except-2 (admit 4·odd); squarefree-except-3 (admit 9·…) | **absent** both ways | v0.24.0 |
+| **D — enlarging** | Does *adding back* a square class keep it? | squarefree-except-2 (admit 4·odd); -except-3 (admit 9·…); replicated at -except-5, -except-7 | **absent** at primes 2, 3, 5, 7 | v0.24.0 / v0.26.0 |
 
 **Axis A (`KFREE-LAG-SIGNATURE-RESULTS.md`, v0.18.0).** Over `n ≤ 2×10^7` in base 2,
 squarefree is uniquely quiet at lag 2 (`|z| ≈ 2.9`, ratio ≈ 0.015 vs. the median of the
@@ -80,13 +84,14 @@ coprime to 3, 5 or 15) also destroys it; those were pre-registered **present** a
 **falsified**. So even-admission is necessary but not sufficient, shown from the
 thinning side.
 
-**Axis D — enlarging (`AXIS-D-EXPONENT-CAP-LAG-SIGNATURE-RESULTS.md`, v0.24.0).** The
-complementary test: instead of removing classes, relax the μ² exponent cap at *one*
-prime while keeping every other prime squarefree. Both relaxations still admit every
-even integer, so on the "even-admission is the driver" reading they should keep the
-signature. They were pre-registered **present** and were **falsified**. The decisive
-table at `N = 2×10^7` (all five sieves have ≥ 1.27×10^6 gaps — the four multiplicative
-ones ≥ 8.1×10^6 — so this is not a power problem):
+**Axis D — enlarging (`AXIS-D-EXPONENT-CAP-LAG-SIGNATURE-RESULTS.md`, v0.24.0;
+`AXIS-D2-GENERALITY-LAG-SIGNATURE-RESULTS.md`, v0.26.0).** The complementary test:
+instead of removing classes, relax the μ² exponent cap at *one* prime while keeping every
+other prime squarefree. Both relaxations still admit every even integer, so on the
+"even-admission is the driver" reading they should keep the signature. They were
+pre-registered **present** and were **falsified**. The decisive table at `N = 2×10^7`
+(all five sieves have ≥ 1.27×10^6 gaps — the four multiplicative ones ≥ 8.1×10^6 — so
+this is not a power problem):
 
 | Sieve | admits even? | quiet lag | `|z|` at lag 2 | median `|z|`, other lags | ratio | signature |
 |---|---|---|---|---|---|---|
@@ -99,20 +104,35 @@ ones ≥ 8.1×10^6 — so this is not a power problem):
 The control held (present), the anchor and negative control held (absent), and both
 primary enlargements were decisively absent — their quiet lag jumps to 5 and 8 and the
 lag-2 `|z|` sits at the same order as the other lags (ratio 1.14 and 0.77, far from the
-0.1 threshold). The relaxations are *loud and non-uniform*: loosening the cap does not
-quiet the serial structure, it removes the specific destructive lag-2 alignment.
+0.1 threshold). A pre-registered generality replication (v0.26.0) pushed the test to the
+next two primes: at 5 and 7 the signature is **absent** too, so the strict-μ²
+requirement generalizes beyond {2, 3}. But that replication surfaced a quantitative
+**trend**: the frozen ratio `r(p) = |z(2)| / median|z(k≠2)|` for squarefree-except-`p`
+decreases monotonically,
+
+    r(2) = 1.142,  r(3) = 0.773,  r(5) = 0.342,  r(7) = 0.169   (control r = 0.015).
+
+Because the admitted extra class `{p² m : p ∤ m}` has density `1/p² − 1/p³ → 0`,
+squarefree-except-`p` → squarefree as `p → ∞`, so `r(p)` must converge to the control
+0.015 and should eventually cross *below* the 0.1 threshold — at which point the
+detector would score the signature **present** again. That is in open tension with a
+literal "destroyed at *every* prime" reading, and it is exactly what Axis D3 (below)
+pre-registers and tests.
 
 ## 3. The conclusion the four axes force
 
-The signature **tolerates neither thinning nor enlarging**. Remove one prime's residues
-(Axis C) → gone. Add back one prime's square class (Axis D) → gone. Replace a
-multiplicative indicator with a mere multiplicative origin (Axis B) → gone. Change `k`
-(Axis A) → gone. The lag-2 unique-quiet base-2 XOR cancellation localizes to **exactly
-the strict squarefree (μ²) sieve**: every prime exponent `≤ 1`, no prime's class
-removed, a multiplicative indicator, and even integers admitted — all three conditions
-together, none alone, and no proper multiplicative relative tested reproducing it. The
-map is a clean symmetric box: the one positive sits at the exact center, surrounded on
-every tested side by a pre-registered, graded negative.
+The signature **tolerates neither thinning nor enlarging at the primes tested**. Remove
+one prime's residues (Axis C) → gone. Add back one prime's square class at 2, 3, 5 or 7
+(Axis D / D2) → gone. Replace a multiplicative indicator with a mere multiplicative
+origin (Axis B) → gone. Change `k` (Axis A) → gone. The lag-2 unique-quiet base-2 XOR
+cancellation localizes to **the strict squarefree (μ²) sieve**: every prime exponent
+`≤ 1`, no prime's class removed, a multiplicative indicator, and even integers admitted —
+all three conditions together, none alone, and no proper multiplicative relative tested
+reproducing it. The map is a clean symmetric box: the one positive sits at the center,
+surrounded on every tested side by a pre-registered, graded negative. The one explicit
+loose thread is *how far* the exponent-cap requirement generalizes: it holds at every
+small prime tested (2, 3, 5, 7), but the monotone ratio trend predicts it need not hold
+for an arbitrarily large single relaxed prime — the subject of the pre-registered Axis D3.
 
 ## 4. Prior art and why this is new
 
@@ -149,16 +169,18 @@ and counts), A045882 (maximal squarefree gap below `10^8` is exactly 10), A02826
 
 **What is new here.** None of the above studies the object of this arc: the *serial
 correlation of the base-2 digit-sum parity of the gaps between consecutive squarefree
-integers*, nor shows that this specific lag-2 XOR cancellation requires *exactly* the
+integers*, nor shows that this specific lag-2 XOR cancellation requires the
 strict squarefree congruence structure — tolerating neither thinning a congruence class
-nor relaxing the exponent cap at a single prime, and distinguishing a multiplicative
-indicator from a mere multiplicative origin. Dietmann–Elsholtz–Shparlinski is the
-closest in spirit (additive digit constraints meeting the multiplicative squarefree
-set), but its object is the squarefree integers and their digits, not the gaps between
-them, not the digit-sum parity of those gaps, and not serial correlation. The novelty
-is the *combination* and the pre-registered discriminator that localizes it; see
-`PRIOR-ART.md`. If you know of prior work that already does this, please open an issue —
-a correct negative is as useful to this project as a positive.
+nor relaxing the exponent cap at a single small prime, and distinguishing a
+multiplicative indicator from a mere multiplicative origin — nor tracks how the lag-2
+cancellation scales with the size of a single relaxed prime. Dietmann–Elsholtz–
+Shparlinski is the closest in spirit (additive digit constraints meeting the
+multiplicative squarefree set), but its object is the squarefree integers and their
+digits, not the gaps between them, not the digit-sum parity of those gaps, and not
+serial correlation. The novelty is the *combination* and the pre-registered
+discriminator that localizes it; see `PRIOR-ART.md`. If you know of prior work that
+already does this, please open an issue — a correct negative is as useful to this
+project as a positive.
 
 ## 5. Honest limits
 
@@ -166,14 +188,17 @@ Every result is at `N = 2×10^7` (`10^8` for the lag-1 measurement); the arc mak
 asymptotic claim, only a statement about these regimes. A "null" means "no lag-2
 unique-quiet signature at this `N`," and in every negative the quiet lag is demonstrably
 not 2 (it is 5, 7 or 8), so each absence is unambiguous rather than a power problem. The
-exponent-cap relaxations were tested at the two specific primes 2 and 3; we do not claim
-every exponent-cap relaxation at every prime behaves identically — only that no
-multiplicative relative tested across Axes A–D reproduces the signature. The axis-D
-generality replication at larger primes (5, 7) is pre-registered in
-`notes/axis-d2-generality-strict-mu2-prereg.md` and queued, not yet graded. The
-discriminator is a fixed, frozen ratio test; it is possible a different discriminator
-would draw the boundary elsewhere, which is why the detector and every threshold are
-committed in code.
+exponent-cap relaxation has now been graded at four single primes — 2 and 3 (Axis D,
+v0.24.0) and 5 and 7 (Axis D2 generality replication, v0.26.0) — and the signature is
+absent at all four. We do **not** claim every exponent-cap relaxation at every prime
+behaves identically: the frozen ratio `r(p) = |z(2)| / median|z(k≠2)|` is *monotone
+decreasing* (1.142 → 0.773 → 0.342 → 0.169 for p = 2, 3, 5, 7) and must converge to the
+control 0.015 as `p → ∞`, so a large enough single relaxed prime should let the
+signature return. That crossover question is pre-registered in
+`notes/axis-d3-large-prime-crossover-strict-mu2-prereg.md` (primes 11 and 13), which has
+been run and whose graded write-up is being prepared for release. The discriminator is a
+fixed, frozen ratio test; it is possible a different discriminator would draw the
+boundary elsewhere, which is why the detector and every threshold are committed in code.
 
 ## 6. Reproduce
 
@@ -193,9 +218,11 @@ sequences before re-computing every published number from the raw `(n_eff, s, S)
 
 After this arc the result is a genuine, reproducible, pre-registered body of
 number-theory micro-results whose spine is a chain of decisive negatives around one
-robust positive: the lag-2 unique-quiet base-2 gap-parity signature needs *exactly* the
-strict squarefree (μ²) congruence structure. It has earned **$0** and has **zero
-external engagement**. Nothing here is a product or a claim of impact. It is offered in
-the open, for anyone to reproduce, extend or refute.
+robust positive: the lag-2 unique-quiet base-2 gap-parity signature needs the
+strict squarefree (μ²) congruence structure, a requirement that holds at every small
+prime tested so far, with one honest, pre-registered open question about how it behaves
+at large single relaxed primes. It has earned **$0** and has **zero external
+engagement**. Nothing here is a product or a claim of impact. It is offered in the open,
+for anyone to reproduce, extend or refute.
 
 — MV2, Munim, Inc. · mv2@munimtech.com
