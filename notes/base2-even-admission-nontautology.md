@@ -6,6 +6,9 @@ does **not** alter the locked predictions in
 `notes/admit-even-lag-signature-prereg.md`; it records an interpretive guard so
 the eventual grade is not over-read in either direction.*
 
+*Refined run 127 (2026-10-20): the load-bearing gap bound below is now exact and
+independently cited (OEIS A045882), replacing the earlier empirical "about 10".*
+
 ## The objection this note answers
 
 The admit-even experiment contrasts B-free sets that **admit even integers**
@@ -34,12 +37,17 @@ For a sieved set with consecutive members `..., n_j, n_{j+1}, ...`, the gap is
 
 In base 2 this is the Thue-Morse value `t(g) = popcount(g) mod 2` (A010060).
 
-Squarefree gaps are **small in the computed range**: every gap between
-consecutive squarefree numbers below 1e8 is at most about 10 (this repo's own
-committed squarefree gap data; summarized in the dev.to write-up). Rigorously,
-gaps between squarefree numbers are known to be sublinear (Filaseta-Trifonov,
-*J. Number Theory* 1992, gap `<< x^{1/5} log x`); the concrete bound `<= 10` is
-empirical **within** `[1, 1e8]`, not a claim for all `x`.
+Squarefree gaps are **small in the computed range**, and the bound is now exact.
+The maximal gap between consecutive squarefree integers below 1e8 is **exactly
+10**: a gap of 10 — equivalently, a run of 9 consecutive non-squarefree integers —
+first occurs at 8,870,024, whereas the next larger gap, 11 (a run of 10
+consecutive non-squarefree integers), first occurs only at 221,167,422 > 1e8.
+This is independently confirmed by OEIS **A045882** ("smallest term of first run
+of at least n consecutive integers which are not squarefree"): a(9) = 8,870,024
+< 1e8 and a(10) = 221,167,422 > 1e8, so no squarefree gap below 1e8 exceeds 10.
+Rigorously, gaps between squarefree numbers are known to be sublinear
+(Filaseta-Trifonov, *J. Number Theory* 1992, gap `<< x^{1/5} log x`); the exact
+value `= 10` is specific to the window `[1, 1e8]`, not a claim for all `x`.
 
 ## Large bases (b >= 11): the objection holds — tautology
 
@@ -52,7 +60,10 @@ For an odd-only set every gap is even, hence `chi_b(g) = 0` for **all** gaps:
 the character is constant and necessarily shows no serial structure. At any base
 `b >= 11` the "signature absent" outcome for odd-only sets is therefore
 **tautological** and carries no mechanistic content. Any admit-even experiment
-run at a large base would be uninformative on the odd-only side.
+run at a large base would be uninformative on the odd-only side. (The threshold
+is exactly `b >= 11` precisely because the below-1e8 gap maximum is exactly 10:
+`b = 11` is the smallest base in which every occurring squarefree gap is a
+single digit.)
 
 ## Base 2: the objection fails — a genuine structural claim
 
@@ -68,9 +79,12 @@ Thus for an odd-only set (all gaps even, `g_j = 2 h_j`),
     chi_2(g_j) = t(2 h_j) = t(h_j),                            (reduction B)
 
 the Thue-Morse parity of the **halved** gaps `h_j = g_j / 2`. This sequence is
-*not* constant: among the even gaps that actually occur, `g = 2,4,6,8,10,12`
-give `t(g) = 1,1,0,1,0,0`, i.e. both values appear. So the base-2 character
-remains a live, two-valued signal even when every gap is even.
+*not* constant: among the even gaps that actually occur below 1e8
+(`g in {2,4,6,8,10}`; see the exact bound above), the Thue-Morse values are
+`t(g) = 1,1,0,1,0`, i.e. both values appear. (The next even gap, `g = 12`, first
+occurs only at 221,167,422 > 1e8; including it changes nothing — `t(12) = 0` — so
+the live two-valued signal is already present within the computed range.) So the
+base-2 character remains a live, two-valued signal even when every gap is even.
 
 Consequently the pre-registered **P-AE-odd = ABSENT** prediction is a real,
 falsifiable structural claim: *the Thue-Morse parity of the halved gaps of an
@@ -103,9 +117,13 @@ proves the exact facts this note relies on:
 2. For `b >= 11` and `1 <= g < b`, `digit_sum(g, b) = g` and
    `chi_b(g) = g mod 2`; over all even `g < b` the character is constant `{0}`
    (the large-base tautology).
-3. In base 2, over the even gaps `{2,4,6,8,10,12}` that actually occur for
-   squarefree sets, `chi_2` takes **both** values `{0, 1}` (base 2 does not
-   collapse).
+3. In base 2, over the small even gaps `{2,4,6,8,10,12}` (the even gaps up to and
+   just past the exact below-1e8 maximum of 10), `chi_2` takes **both** values
+   `{0, 1}` (base 2 does not collapse).
+
+The exact below-1e8 gap maximum of 10 is a lookup against OEIS A045882
+(a(9) = 8,870,024; a(10) = 221,167,422), not a claim produced by this repo's own
+data alone.
 
 ---
 
