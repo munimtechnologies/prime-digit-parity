@@ -27,14 +27,18 @@ turned into a hunt for the structural cause of one specific, robust signal.
   `notes/*-prereg.md`), measured in a sealed sandbox, then graded against the
   locked prediction — so a surprising outcome can't be rationalized after the
   fact. Predictions that failed are reported as failures.
-- Current release: **v0.27.0**.
+- Current release: **v0.28.0**.
 - The four perturbation axes are complete; **[`SYNTHESIS.md`](SYNTHESIS.md)**
   pulls the whole A–D map into one write-up. The enlarging axis (D) has since
   been pushed to larger single primes and found a **crossover**: relaxing the
   exponent cap at primes 11 and 13 no longer destroys the signature
   (`AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). A further relaxation at
-  17, 19 and 23 has been run to test whether the ratio then converges
-  monotonically to the control; its graded write-up is in preparation.
+  17, 19 and 23 then **confirmed monotone convergence to the control** with no
+  second crossover (`AXIS-D4-CROSSOVER-CONVERGENCE-RESULTS.md`, v0.28.0), and a
+  pre-registered follow-up at 29, 31 and 37
+  (`notes/axis-d5-density-scaling-law-strict-mu2-prereg.md`) additionally tests a
+  candidate quantitative density scaling law for that convergence; it has been
+  run and its graded write-up is in preparation.
 
 ## What has been found
 
@@ -104,20 +108,23 @@ The headline arc, in order:
     **and** strict congruences together, none alone. The complete map is written
     up in [`SYNTHESIS.md`](SYNTHESIS.md).
 12. **But the exponent-cap requirement is quantitative, not all-or-nothing: it
-    has a large-prime crossover.** The lag-2/median ratio `r(p)` for
-    squarefree-except-`p` is *monotone decreasing* — 1.142 → 0.773 → 0.342 →
-    0.169 for p = 2, 3, 5, 7 — and must converge to the control value 0.015 as
-    p → ∞ (the admitted class has density 1/p² − 1/p³ → 0). The pre-registered
-    test of whether `r(p)` crosses below the 0.1 detector threshold found that it
-    **does**: at the larger primes 11 and 13 the signature is **present** again
-    (r = 0.0777, 0.0603; pre-registered absent → **falsified**,
+    has a large-prime crossover, and past it the ratio converges to the
+    control.** The lag-2/median ratio `r(p)` for squarefree-except-`p` is
+    *monotone decreasing* — 1.142 → 0.773 → 0.342 → 0.169 for p = 2, 3, 5, 7 —
+    and must converge to the control value 0.015 as p → ∞ (the admitted class has
+    density 1/p² − 1/p³ → 0). The pre-registered test of whether `r(p)` crosses
+    below the 0.1 detector threshold found that it **does**: at the larger primes
+    11 and 13 the signature is **present** again (r = 0.0777, 0.0603;
+    pre-registered absent → **falsified**,
     `AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). So the "destroyed at
     *every* prime" reading is wrong — the destruction holds only **below a
     prime-size crossover** sitting between 7 and 11, and the correct statement is
     quantitative: a single-prime relaxation weakens the signature by an amount
-    that shrinks with `p`. A follow-up relaxing the cap at 17, 19 and 23 has been
-    run to ask whether `r(p)` then converges monotonically to the control; its
-    graded write-up is in preparation.
+    that shrinks with `p`. A follow-up relaxing the cap at 17, 19 and 23
+    **confirmed the convergence**: all three are present with `r(p)` still falling
+    monotonically (0.0420, 0.0366, 0.0291) and no second crossover, so past the
+    crossover the ratio converges toward the squarefree control
+    (`AXIS-D4-CROSSOVER-CONVERGENCE-RESULTS.md`, v0.28.0).
 
 ## Open / pending questions
 
@@ -125,17 +132,20 @@ All four perturbation axes (which k-free; multiplicative origin vs. indicator;
 thinning; exponent-cap enlarging) have been run and graded against their locked
 predictions, and the enlarging axis has a confirmed **crossover** at prime 11:
 relaxing the cap below it destroys the signature, above it preserves it
-(`AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). Two sharper questions are
-now open and one is already running. **(a)** *Locate the exact crossover prime*:
-it is between 7 (absent) and 11 (present) for this detector and threshold.
-**(b)** *Characterise the convergence*: does `r(p)` fall monotonically to the
-control value 0.015 as `p → ∞`, or is there a second crossover / re-destruction
-at some larger prime? A pre-registered follow-up (relax at 17, 19, 23;
-`notes/axis-d4-crossover-convergence-strict-mu2-prereg.md`) has been run and its
-graded write-up is in preparation. The other natural directions — larger N, and a
-formal account of *why* the strict μ² congruence structure produces the lag-2 XOR
-cancellation — are open but not yet pre-registered. If you see a sharper
-discriminator, please open an issue.
+(`AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). Past the crossover the
+ratio **converges monotonically to the control** — confirmed at 17, 19 and 23
+with no second crossover (`AXIS-D4-CROSSOVER-CONVERGENCE-RESULTS.md`, v0.28.0).
+Sharper questions remain. **(a)** *Locate the exact crossover prime*: it is
+between 7 (absent) and 11 (present) for this detector and threshold. **(b)**
+*Does the convergence continue, and is it quantitative?* A pre-registered
+follow-up (relax at 29, 31, 37;
+`notes/axis-d5-density-scaling-law-strict-mu2-prereg.md`) tests both whether
+`r(p)` keeps falling toward the control at the next three primes and whether the
+super-control excess obeys a density scaling law `r(p) − r_control ≈
+C·(1/p² − 1/p³)`; it has been run and its graded write-up is in preparation. The
+other natural directions — larger N, and a formal account of *why* the strict μ²
+congruence structure produces the lag-2 XOR cancellation — are open but not yet
+pre-registered. If you see a sharper discriminator, please open an issue.
 
 ## Results index
 
@@ -163,6 +173,7 @@ discriminator, please open an issue.
 | `FROM-SCRATCH-AXIS-D-REPRODUCTION.md` | Independent cold reproduction of the Axis-D exponent-cap result | v0.25.0 |
 | `AXIS-D2-GENERALITY-LAG-SIGNATURE-RESULTS.md` | Strict-μ² generalizes: relaxing the cap at 5 or 7 also kills it (ratio monotone decreasing) | v0.26.0 |
 | `AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md` | Relaxing the cap at a larger prime (11, 13) no longer kills it: a prime-size crossover | v0.27.0 |
+| `AXIS-D4-CROSSOVER-CONVERGENCE-RESULTS.md` | Past the crossover, relaxing at 17/19/23 keeps it: the ratio converges monotonically to the control, no second crossover | v0.28.0 |
 | `SYNTHESIS.md` | Four-axis synthesis: the signature localizes to the strict squarefree (μ²) sieve | — |
 
 ## Reproducing
