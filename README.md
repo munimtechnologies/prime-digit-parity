@@ -28,6 +28,8 @@ turned into a hunt for the structural cause of one specific, robust signal.
   locked prediction — so a surprising outcome can't be rationalized after the
   fact. Predictions that failed are reported as failures.
 - Current release: **v0.24.0**.
+- The four perturbation axes are complete; **[`SYNTHESIS.md`](SYNTHESIS.md)**
+  pulls the whole A–D map into one write-up.
 
 ## What has been found
 
@@ -91,18 +93,20 @@ The headline arc, in order:
     *exactly* the strict squarefree (every exponent ≤ 1, no prime's class
     removed) sieve — a multiplicative indicator, even-admission **and** strict
     congruences together, none alone and no proper multiplicative relative tested
-    reproducing it.
+    reproducing it. The complete map is written up in
+    [`SYNTHESIS.md`](SYNTHESIS.md).
 
 ## Open / pending questions
 
-Every pre-registered experiment in `notes/` has now been run and graded against
-its locked prediction, including the four perturbation axes (which k-free;
-multiplicative origin vs. indicator; thinning; exponent-cap enlarging). No
-pre-registered sandbox job is currently pending. The natural next directions —
-other single-prime exponent-cap relaxations, larger N, and a formal account of
-*why* the strict μ² congruence structure produces the lag-2 XOR cancellation —
-are open but not yet pre-registered. If you see a sharper discriminator, please
-open an issue.
+All four perturbation axes (which k-free; multiplicative origin vs. indicator;
+thinning; exponent-cap enlarging) have been run and graded against their locked
+predictions. One pre-registered replication is **queued, not yet graded**:
+whether the exponent-cap destruction generalizes to larger primes
+(squarefree-except-5 admitting 25·…, squarefree-except-7 admitting 49·…;
+`notes/axis-d2-generality-strict-mu2-prereg.md`). The other natural next
+directions — larger N, and a formal account of *why* the strict μ² congruence
+structure produces the lag-2 XOR cancellation — are open but not yet
+pre-registered. If you see a sharper discriminator, please open an issue.
 
 ## Results index
 
@@ -127,6 +131,7 @@ open an issue.
 | `FROM-SCRATCH-MECHANISM.md` | From-scratch confirmation of the Liouville/odd-squarefree mechanism | v0.22.0 |
 | `ADMIT-EVEN-LAG-SIGNATURE-RESULTS.md` | Keeping evens but lifting one odd prime also kills it; needs full μ² structure | v0.23.0 |
 | `AXIS-D-EXPONENT-CAP-LAG-SIGNATURE-RESULTS.md` | Relaxing the exponent cap at one prime kills it too; needs *strict* μ² | v0.24.0 |
+| `SYNTHESIS.md` | Four-axis synthesis: the signature localizes to exactly strict squarefree (μ²) | — |
 
 ## Reproducing
 
@@ -149,23 +154,29 @@ control throughout.
 - `data/*.json` — frozen measurements behind each result.
 - `notes/*-prereg.md` — locked pre-registrations (written before each job runs).
 - `*-RESULTS.md` — graded write-ups.
+- `SYNTHESIS.md` — the four-axis synthesis of the whole arc.
 - `PRIOR-ART.md` — prior-art positioning and the novelty statement.
 - `test_*.py` — proofs and result re-derivations.
 
 ## Prior art and novelty
 
 `PRIOR-ART.md` documents the search. The individual ingredients are known
-(Gelfond 1968; Mauduit–Rivat, Ann. Math. 171; Spiegelhofer; Baake–Coons;
-k-free densities 1/ζ(k); Liouville λ / OEIS A028260; odd squarefree A056911).
-What appears to be new here is the *combination*: tying sum-of-digits parity,
-consecutive-gap serial correlation, and sieve structure (squarefree / B-free /
-multiplicative level sets) together, with a pre-registered discriminator that
-localizes the lag-2 signature to the strict squarefree (μ²) congruence structure
-— needing a multiplicative indicator, even-admission, *and* strict congruences
-together, none alone, and tolerating neither thinning a congruence class nor
-relaxing the exponent cap at a single prime. If you know of prior work that
-already does this, please open an issue — a correct negative is as useful to this
-project as a positive.
+(Gelfond 1968, Acta Arith. 13; Mauduit–Rivat, Ann. Math. 171; Spiegelhofer;
+Baake–Coons; k-free densities 1/ζ(k); Liouville λ / OEIS A028260; odd squarefree
+A056911). The nearest neighbour in the literature is Dietmann–Elsholtz–
+Shparlinski, *Prescribing the binary digits of squarefree numbers and quadratic
+residues*, Trans. Amer. Math. Soc. 369 (2017), 8369–8388 — but it studies the
+squarefree integers themselves within binary-digit-constrained sets, not the
+gaps between them or the digit-sum parity of those gaps. What appears to be new
+here is the *combination*: tying sum-of-digits parity, consecutive-gap serial
+correlation, and sieve structure (squarefree / B-free / multiplicative level
+sets) together, with a pre-registered discriminator that localizes the lag-2
+signature to the strict squarefree (μ²) congruence structure — needing a
+multiplicative indicator, even-admission, *and* strict congruences together,
+none alone, and tolerating neither thinning a congruence class nor relaxing the
+exponent cap at a single prime. If you know of prior work that already does this,
+please open an issue — a correct negative is as useful to this project as a
+positive.
 
 ## License
 
