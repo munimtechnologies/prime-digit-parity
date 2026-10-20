@@ -27,7 +27,7 @@ turned into a hunt for the structural cause of one specific, robust signal.
   `notes/*-prereg.md`), measured in a sealed sandbox, then graded against the
   locked prediction — so a surprising outcome can't be rationalized after the
   fact. Predictions that failed are reported as failures.
-- Current release: **v0.18.0**.
+- Current release: **v0.23.0**.
 
 ## What has been found
 
@@ -61,26 +61,42 @@ The headline arc, in order:
    (`STRIDE-CANCEL-RESULTS.md`, `STRIDE-DECOMP.md`), and the memory itself is
    **higher-order and cross-sieve universal** with a sieve-specific loudest base
    (`MARKOV-ORDER-RESULTS.md`, `MARKOV-CROSS-RESULTS.md`).
+8. **Each mechanism result reproduces on an independent code path.** A
+   from-scratch reproduction with a brute-force-checked big-omega sieve and a
+   separate permutation null confirms the key contrasts, so no headline rests on
+   a single sealed job (`FROM-SCRATCH-REPRODUCTION.md`, v0.19.0;
+   `FROM-SCRATCH-MECHANISM.md`, v0.22.0).
+9. **The signature needs a multiplicative *indicator*, not merely a
+   multiplicative *origin*.** On the Liouville λ = +1 level set (Ω even, OEIS
+   A028260) — a level set of a completely multiplicative function whose own set
+   indicator is *not* multiplicative — the lag-2 quiet is absent (flat across
+   lags). Pre-registered absent; held (`LIOUVILLE-LAG-SIGNATURE-RESULTS.md`,
+   v0.20.0).
+10. **The signature needs the full squarefree congruence structure:
+    even-admission is necessary but not sufficient.** Removing even integers
+    (odd squarefree A056911, coprime-6) destroys it — every gap is forced even
+    (`ODD-SQUAREFREE-LAG-SIGNATURE-RESULTS.md`, v0.21.0). But *keeping* all evens
+    while lifting a single odd prime also destroys it: squarefree coprime to 3,
+    5 or 15 are all loud at lag 2 (pre-registered present → **falsified**,
+    `ADMIT-EVEN-LAG-SIGNATURE-RESULTS.md`, v0.23.0). The Axis-C cell is now
+    closed as a clean 2×2 — both thinning the evens out and relaxing one
+    congruence kill the lag-2 quiet.
 
 ## Open / pending questions (pre-registered, awaiting compute)
 
 These predictions are locked in `notes/` and will be graded exactly as written
 when their sandbox jobs complete:
 
-- **Liouville λ = +1 level set** (`notes/liouville-lag-signature-prereg.md`):
-  a completely-multiplicative-function level set whose indicator is itself
-  non-multiplicative — separates "needs a multiplicative indicator" from "needs
-  multiplicative structure". Pre-registered **absent**.
-- **Odd squarefree / coprime-6** (`notes/odd-squarefree-lag-signature-prereg.md`):
-  multiplicative indicator but all gaps are even — isolates "admits even
-  integers" from μ². Pre-registered **absent**; must be graded in base 2 only,
-  because at base b ≥ 11 the all-even side is tautologically quiet
-  (`notes/base2-even-admission-nontautology.md` proves base 2 is *not* a
-  tautology, via t(2h) = t(h)).
-- **Squarefree coprime-3/5/15** (`notes/admit-even-lag-signature-prereg.md`):
-  multiplicative indicator that *keeps* even integers — the complementary cell
-  that would pin the driver to even-admission (parity of n) if it holds.
-  Pre-registered **present**.
+- **Exponent-cap relaxation / squarefree-except-2, squarefree-except-3**
+  (`notes/axis-d-exponent-cap-lag-signature-prereg.md`): the complementary
+  *enlarging* perturbation to Axis C. Instead of removing residue classes, it
+  adds some back — admitting multiples of 4 (but not 8), or of 9 (but not 27 or
+  4) — loosening the μ² exponent cap at one small prime while keeping every
+  other prime squarefree. It separates "needs strict squarefreeness at every
+  prime" from "tolerates a looser cap at one prime." Pre-registered **present**;
+  queued in the sandbox. Given Axis C's fragility, an absent outcome would
+  further sharpen the picture to *strict* μ² (tolerating neither thinning nor
+  enlarging) — but it will be graded strictly to whatever the detector reports.
 
 ## Results index
 
@@ -99,6 +115,11 @@ when their sandbox jobs complete:
 | `MARKOV-CROSS-RESULTS.md` | Higher-order memory is cross-sieve universal | v0.16.0 |
 | `LUCKY-LAG-SIGNATURE-RESULTS.md` | Signature tied to multiplicative sieves, not thinning | v0.17.0 |
 | `KFREE-LAG-SIGNATURE-RESULTS.md` | Signature specific to squarefree (k = 2) | v0.18.0 |
+| `FROM-SCRATCH-REPRODUCTION.md` | Independent-code-path reproduction of the mechanism contrasts | v0.19.0 |
+| `LIOUVILLE-LAG-SIGNATURE-RESULTS.md` | Needs a multiplicative indicator, not just a multiplicative origin | v0.20.0 |
+| `ODD-SQUAREFREE-LAG-SIGNATURE-RESULTS.md` | Removing even integers destroys the signature | v0.21.0 |
+| `FROM-SCRATCH-MECHANISM.md` | From-scratch confirmation of the Liouville/odd-squarefree mechanism | v0.22.0 |
+| `ADMIT-EVEN-LAG-SIGNATURE-RESULTS.md` | Keeping evens but lifting one odd prime also kills it; needs full μ² structure | v0.23.0 |
 
 ## Reproducing
 
@@ -132,9 +153,10 @@ k-free densities 1/ζ(k); Liouville λ / OEIS A028260; odd squarefree A056911).
 What appears to be new here is the *combination*: tying sum-of-digits parity,
 consecutive-gap serial correlation, and sieve structure (squarefree / B-free /
 multiplicative level sets) together, with a pre-registered discriminator that
-localizes the lag-2 signature to squarefree (μ²) multiplicative structure. If
-you know of prior work that already does this, please open an issue — a correct
-negative is as useful to this project as a positive.
+localizes the lag-2 signature to the full squarefree (μ²) congruence structure —
+needing a multiplicative indicator, even-admission, *and* strict congruences
+together, none alone. If you know of prior work that already does this, please
+open an issue — a correct negative is as useful to this project as a positive.
 
 ## License
 
