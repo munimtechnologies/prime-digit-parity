@@ -9,6 +9,13 @@ the eventual grade is not over-read in either direction.*
 *Refined run 127 (2026-10-20): the load-bearing gap bound below is now exact and
 independently cited (OEIS A045882), replacing the earlier empirical "about 10".*
 
+*Corrected run 131 (2026-10-20): the Filaseta-Trifonov sublinear-gap citation
+below was mis-attributed to "J. Number Theory 1992". The `x^{1/5} log x`
+squarefree-gap bound is from their 1990 Allerton Park paper (Progr. Math. 85,
+Birkhauser, pp. 235-253), checked against the Birkhauser record; their 1992
+"II" paper is in the J. London Math. Soc., and the J. Number Theory papers are
+Filaseta's solo short-interval works (1988, 1990). Corrected here.*
+
 ## The objection this note answers
 
 The admit-even experiment contrasts B-free sets that **admit even integers**
@@ -45,9 +52,13 @@ consecutive non-squarefree integers), first occurs only at 221,167,422 > 1e8.
 This is independently confirmed by OEIS **A045882** ("smallest term of first run
 of at least n consecutive integers which are not squarefree"): a(9) = 8,870,024
 < 1e8 and a(10) = 221,167,422 > 1e8, so no squarefree gap below 1e8 exceeds 10.
-Rigorously, gaps between squarefree numbers are known to be sublinear
-(Filaseta-Trifonov, *J. Number Theory* 1992, gap `<< x^{1/5} log x`); the exact
-value `= 10` is specific to the window `[1, 1e8]`, not a claim for all `x`.
+Rigorously, gaps between consecutive squarefree numbers are known to be
+sublinear: Filaseta & Trifonov proved that for some `c > 0` the interval
+`(x, x + c*x^{1/5} log x]` contains a squarefree integer for all large `x`
+(M. Filaseta and O. Trifonov, "On gaps between squarefree numbers," in
+*Analytic Number Theory* (Allerton Park, IL, 1989), Progr. Math. 85, Birkhauser,
+Boston, 1990, pp. 235-253). The exact value `= 10` is specific to the window
+`[1, 1e8]`, not a claim for all `x`.
 
 ## Large bases (b >= 11): the objection holds — tautology
 
