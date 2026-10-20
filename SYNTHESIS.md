@@ -19,15 +19,18 @@ lag 2 is the single quietest lag in `1..8` *and* `|z(2)| ≤ 0.1 × median{|z(k)
 Over four pre-registered perturbation axes we show this signature localizes to
 **the strict squarefree (μ²) sieve**: it needs a multiplicative *indicator*
 (not merely a multiplicative origin), it needs even integers admitted, and it needs the
-strict exponent cap — a requirement that holds at every small prime tested so far
-(2, 3, 5, 7). It survives neither thinning a congruence class (Axis C) nor relaxing the
-exponent cap at a single such prime (Axis D). No proper multiplicative relative tested
-across the four axes reproduces it. This is a synthesis of the arc in this repository
-(releases v0.15.0–v0.26.0); the strongest result is a chain of decisive *negatives*
-around one robust positive. One honest tension is carried openly: the destruction ratio
-`r(p)` for squarefree-except-`p` is *monotone decreasing* in `p`, so whether the
-exponent-cap requirement holds at *every* prime (as opposed to every small prime) is a
-live, pre-registered question (Axis D3, below).
+strict exponent cap — a requirement that holds at every small prime tested (2, 3, 5, 7).
+It survives neither thinning a congruence class (Axis C) nor relaxing the exponent cap at
+a single such prime (Axis D). No proper multiplicative relative tested across the four
+axes reproduces it. This is a synthesis of the arc in this repository (releases
+v0.15.0–v0.27.0); the strongest result is a chain of decisive *negatives* around one
+robust positive. One clause of that conclusion turned out to be an artefact of testing
+only small primes: a pre-registered follow-up (Axis D3) found a **crossover** — the
+destruction ratio `r(p)` for squarefree-except-`p` is *monotone decreasing* in `p` and
+crosses below the detector threshold at the larger primes 11 and 13, where the signature
+returns. The corrected statement is quantitative: the exponent-cap relaxation weakens the
+signature by an amount that shrinks with `p`, destroying it only below a prime-size
+crossover that sits between 7 and 11.
 
 ## 1. The object and why it is base-2 specific
 
@@ -64,7 +67,7 @@ the identical observable, null, stride split and scale-free detector.
 | **A — which k-free** | Is it squarefree specifically, or any `k`-free set? | cube-free, 4th-power-free | only **k = 2** keeps it | v0.18.0 |
 | **B — origin vs. indicator** | Does a multiplicative *origin* suffice, or is a multiplicative *indicator* needed? | Liouville λ = +1 level set (A028260) | **absent** (flat): needs an indicator | v0.20.0 |
 | **C — thinning** | Does removing residue classes keep it? | odd squarefree (A056911); squarefree coprime to 3 / 5 / 15 | **absent** both ways | v0.21.0 / v0.23.0 |
-| **D — enlarging** | Does *adding back* a square class keep it? | squarefree-except-2 (admit 4·odd); -except-3 (admit 9·…); replicated at -except-5, -except-7 | **absent** at primes 2, 3, 5, 7 | v0.24.0 / v0.26.0 |
+| **D — enlarging** | Does *adding back* a square class keep it? | squarefree-except-2 (admit 4·odd); -except-3/5/7; and larger primes 11/13 | **absent** at 2, 3, 5, 7; **present** at 11, 13 (crossover) | v0.24.0 / v0.26.0 / v0.27.0 |
 
 **Axis A (`KFREE-LAG-SIGNATURE-RESULTS.md`, v0.18.0).** Over `n ≤ 2×10^7` in base 2,
 squarefree is uniquely quiet at lag 2 (`|z| ≈ 2.9`, ratio ≈ 0.015 vs. the median of the
@@ -116,23 +119,38 @@ Because the admitted extra class `{p² m : p ∤ m}` has density `1/p² − 1/p�
 squarefree-except-`p` → squarefree as `p → ∞`, so `r(p)` must converge to the control
 0.015 and should eventually cross *below* the 0.1 threshold — at which point the
 detector would score the signature **present** again. That is in open tension with a
-literal "destroyed at *every* prime" reading, and it is exactly what Axis D3 (below)
-pre-registers and tests.
+literal "destroyed at *every* prime" reading, and Axis D3 pre-registered and tested it.
+
+**Axis D3 — the crossover (`AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0).** The
+pre-registered test relaxed the cap at the larger primes 11 and 13. The ratio continued
+straight down — `r(11) = 0.0777`, `r(13) = 0.0603` — and crossed below the 0.1 threshold,
+so the detector scores both **present**. The pre-registered primary prediction (absent at
+11/13, following the "every prime destroys" reading) was **falsified**:
+`crossover_detected = True` and `strict_mu2_destruction_persists_at_11_and_13 = False`.
+The honest statement is now quantitative — relaxing the cap at a single prime `p` weakens
+the signature by an amount that shrinks with `p`, destroying it only below a crossover
+that sits between 7 and 11. A further follow-up (Axis D4) relaxes the cap at 17, 19 and
+23 to test whether `r(p)` then converges monotonically to the control or crosses back; it
+has been run and its graded write-up is in preparation.
 
 ## 3. The conclusion the four axes force
 
-The signature **tolerates neither thinning nor enlarging at the primes tested**. Remove
-one prime's residues (Axis C) → gone. Add back one prime's square class at 2, 3, 5 or 7
-(Axis D / D2) → gone. Replace a multiplicative indicator with a mere multiplicative
+The signature **tolerates neither thinning nor enlarging at the small primes tested**.
+Remove one prime's residues (Axis C) → gone. Add back one prime's square class at 2, 3, 5
+or 7 (Axis D / D2) → gone. Replace a multiplicative indicator with a mere multiplicative
 origin (Axis B) → gone. Change `k` (Axis A) → gone. The lag-2 unique-quiet base-2 XOR
 cancellation localizes to **the strict squarefree (μ²) sieve**: every prime exponent
 `≤ 1`, no prime's class removed, a multiplicative indicator, and even integers admitted —
 all three conditions together, none alone, and no proper multiplicative relative tested
 reproducing it. The map is a clean symmetric box: the one positive sits at the center,
 surrounded on every tested side by a pre-registered, graded negative. The one explicit
-loose thread is *how far* the exponent-cap requirement generalizes: it holds at every
-small prime tested (2, 3, 5, 7), but the monotone ratio trend predicts it need not hold
-for an arbitrarily large single relaxed prime — the subject of the pre-registered Axis D3.
+loose thread — *how far* the exponent-cap requirement generalizes — has since resolved
+into a sharper picture: it holds at the small primes 2, 3, 5, 7, but Axis D3 (v0.27.0)
+found that at the larger primes 11 and 13 a single-prime relaxation no longer destroys the
+signature (a prime-size crossover between 7 and 11). The requirement is therefore
+**quantitative, not all-or-nothing**; the remaining open questions are the exact crossover
+prime and whether `r(p)` converges monotonically to the control for every larger prime
+(Axis D4, run, write-up in preparation).
 
 ## 4. Prior art and why this is new
 
@@ -173,14 +191,14 @@ integers*, nor shows that this specific lag-2 XOR cancellation requires the
 strict squarefree congruence structure — tolerating neither thinning a congruence class
 nor relaxing the exponent cap at a single small prime, and distinguishing a
 multiplicative indicator from a mere multiplicative origin — nor tracks how the lag-2
-cancellation scales with the size of a single relaxed prime. Dietmann–Elsholtz–
-Shparlinski is the closest in spirit (additive digit constraints meeting the
-multiplicative squarefree set), but its object is the squarefree integers and their
-digits, not the gaps between them, not the digit-sum parity of those gaps, and not
-serial correlation. The novelty is the *combination* and the pre-registered
-discriminator that localizes it; see `PRIOR-ART.md`. If you know of prior work that
-already does this, please open an issue — a correct negative is as useful to this
-project as a positive.
+cancellation scales with the size of a single relaxed prime, finding a prime-size
+crossover. Dietmann–Elsholtz–Shparlinski is the closest in spirit (additive digit
+constraints meeting the multiplicative squarefree set), but its object is the squarefree
+integers and their digits, not the gaps between them, not the digit-sum parity of those
+gaps, and not serial correlation. The novelty is the *combination*, the pre-registered
+discriminator that localizes it, and the prime-size crossover; see `PRIOR-ART.md`. If you
+know of prior work that already does this, please open an issue — a correct negative is as
+useful to this project as a positive.
 
 ## 5. Honest limits
 
@@ -188,17 +206,18 @@ Every result is at `N = 2×10^7` (`10^8` for the lag-1 measurement); the arc mak
 asymptotic claim, only a statement about these regimes. A "null" means "no lag-2
 unique-quiet signature at this `N`," and in every negative the quiet lag is demonstrably
 not 2 (it is 5, 7 or 8), so each absence is unambiguous rather than a power problem. The
-exponent-cap relaxation has now been graded at four single primes — 2 and 3 (Axis D,
-v0.24.0) and 5 and 7 (Axis D2 generality replication, v0.26.0) — and the signature is
-absent at all four. We do **not** claim every exponent-cap relaxation at every prime
-behaves identically: the frozen ratio `r(p) = |z(2)| / median|z(k≠2)|` is *monotone
-decreasing* (1.142 → 0.773 → 0.342 → 0.169 for p = 2, 3, 5, 7) and must converge to the
-control 0.015 as `p → ∞`, so a large enough single relaxed prime should let the
-signature return. That crossover question is pre-registered in
-`notes/axis-d3-large-prime-crossover-strict-mu2-prereg.md` (primes 11 and 13), which has
-been run and whose graded write-up is being prepared for release. The discriminator is a
-fixed, frozen ratio test; it is possible a different discriminator would draw the
-boundary elsewhere, which is why the detector and every threshold are committed in code.
+exponent-cap relaxation has now been graded at six single primes — 2 and 3 (Axis D,
+v0.24.0), 5 and 7 (Axis D2 generality replication, v0.26.0), and 11 and 13 (Axis D3,
+v0.27.0). The signature is absent at 2, 3, 5, 7 and **present** at 11, 13. We do **not**
+claim every exponent-cap relaxation at every prime behaves identically: the frozen ratio
+`r(p) = |z(2)| / median|z(k≠2)|` is *monotone decreasing* (1.142 → 0.773 → 0.342 → 0.169
+→ 0.0777 → 0.0603 for p = 2, 3, 5, 7, 11, 13) and must converge to the control 0.015 as
+`p → ∞`, so a large enough single relaxed prime lets the signature return — which is
+exactly the crossover Axis D3 found. A further relaxation at 17, 19, 23 (Axis D4) has been
+run to test monotone convergence to the control; its graded write-up is in preparation.
+The discriminator is a fixed, frozen ratio test; it is possible a different discriminator
+would draw the boundary elsewhere, which is why the detector and every threshold are
+committed in code.
 
 ## 6. Reproduce
 
@@ -219,10 +238,11 @@ sequences before re-computing every published number from the raw `(n_eff, s, S)
 After this arc the result is a genuine, reproducible, pre-registered body of
 number-theory micro-results whose spine is a chain of decisive negatives around one
 robust positive: the lag-2 unique-quiet base-2 gap-parity signature needs the
-strict squarefree (μ²) congruence structure, a requirement that holds at every small
-prime tested so far, with one honest, pre-registered open question about how it behaves
-at large single relaxed primes. It has earned **$0** and has **zero external
-engagement**. Nothing here is a product or a claim of impact. It is offered in the open,
-for anyone to reproduce, extend or refute.
+strict squarefree (μ²) congruence structure — but only below a prime-size crossover.
+Relaxing the exponent cap at a single small prime (2, 3, 5, 7) destroys it; at the larger
+primes 11 and 13 the single-prime relaxation is small enough that the signature returns,
+and the destruction ratio falls monotonically toward the squarefree control. It has
+earned **$0** and has **zero external engagement**. Nothing here is a product or a claim
+of impact. It is offered in the open, for anyone to reproduce, extend or refute.
 
 — MV2, Munim, Inc. · mv2@munimtech.com
