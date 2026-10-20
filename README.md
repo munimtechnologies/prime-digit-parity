@@ -27,7 +27,7 @@ turned into a hunt for the structural cause of one specific, robust signal.
   `notes/*-prereg.md`), measured in a sealed sandbox, then graded against the
   locked prediction — so a surprising outcome can't be rationalized after the
   fact. Predictions that failed are reported as failures.
-- Current release: **v0.23.0**.
+- Current release: **v0.24.0**.
 
 ## What has been found
 
@@ -81,22 +81,28 @@ The headline arc, in order:
     `ADMIT-EVEN-LAG-SIGNATURE-RESULTS.md`, v0.23.0). The Axis-C cell is now
     closed as a clean 2×2 — both thinning the evens out and relaxing one
     congruence kill the lag-2 quiet.
+11. **The signature tolerates neither thinning nor enlarging — it needs
+    *strict* μ².** Relaxing the squarefree exponent cap at a single prime
+    (squarefree-except-2, admitting 4·odd; squarefree-except-3, admitting 9·…)
+    keeps every even integer yet still destroys the signature (quiet lag 5 / 8,
+    ratios 1.14 / 0.77; pre-registered present → **falsified**,
+    `AXIS-D-EXPONENT-CAP-LAG-SIGNATURE-RESULTS.md`, v0.24.0). With Axis C this
+    closes a four-axis map: the lag-2 unique-quiet cancellation localizes to
+    *exactly* the strict squarefree (every exponent ≤ 1, no prime's class
+    removed) sieve — a multiplicative indicator, even-admission **and** strict
+    congruences together, none alone and no proper multiplicative relative tested
+    reproducing it.
 
-## Open / pending questions (pre-registered, awaiting compute)
+## Open / pending questions
 
-These predictions are locked in `notes/` and will be graded exactly as written
-when their sandbox jobs complete:
-
-- **Exponent-cap relaxation / squarefree-except-2, squarefree-except-3**
-  (`notes/axis-d-exponent-cap-lag-signature-prereg.md`): the complementary
-  *enlarging* perturbation to Axis C. Instead of removing residue classes, it
-  adds some back — admitting multiples of 4 (but not 8), or of 9 (but not 27 or
-  4) — loosening the μ² exponent cap at one small prime while keeping every
-  other prime squarefree. It separates "needs strict squarefreeness at every
-  prime" from "tolerates a looser cap at one prime." Pre-registered **present**;
-  queued in the sandbox. Given Axis C's fragility, an absent outcome would
-  further sharpen the picture to *strict* μ² (tolerating neither thinning nor
-  enlarging) — but it will be graded strictly to whatever the detector reports.
+Every pre-registered experiment in `notes/` has now been run and graded against
+its locked prediction, including the four perturbation axes (which k-free;
+multiplicative origin vs. indicator; thinning; exponent-cap enlarging). No
+pre-registered sandbox job is currently pending. The natural next directions —
+other single-prime exponent-cap relaxations, larger N, and a formal account of
+*why* the strict μ² congruence structure produces the lag-2 XOR cancellation —
+are open but not yet pre-registered. If you see a sharper discriminator, please
+open an issue.
 
 ## Results index
 
@@ -120,6 +126,7 @@ when their sandbox jobs complete:
 | `ODD-SQUAREFREE-LAG-SIGNATURE-RESULTS.md` | Removing even integers destroys the signature | v0.21.0 |
 | `FROM-SCRATCH-MECHANISM.md` | From-scratch confirmation of the Liouville/odd-squarefree mechanism | v0.22.0 |
 | `ADMIT-EVEN-LAG-SIGNATURE-RESULTS.md` | Keeping evens but lifting one odd prime also kills it; needs full μ² structure | v0.23.0 |
+| `AXIS-D-EXPONENT-CAP-LAG-SIGNATURE-RESULTS.md` | Relaxing the exponent cap at one prime kills it too; needs *strict* μ² | v0.24.0 |
 
 ## Reproducing
 
@@ -153,10 +160,12 @@ k-free densities 1/ζ(k); Liouville λ / OEIS A028260; odd squarefree A056911).
 What appears to be new here is the *combination*: tying sum-of-digits parity,
 consecutive-gap serial correlation, and sieve structure (squarefree / B-free /
 multiplicative level sets) together, with a pre-registered discriminator that
-localizes the lag-2 signature to the full squarefree (μ²) congruence structure —
-needing a multiplicative indicator, even-admission, *and* strict congruences
-together, none alone. If you know of prior work that already does this, please
-open an issue — a correct negative is as useful to this project as a positive.
+localizes the lag-2 signature to the strict squarefree (μ²) congruence structure
+— needing a multiplicative indicator, even-admission, *and* strict congruences
+together, none alone, and tolerating neither thinning a congruence class nor
+relaxing the exponent cap at a single prime. If you know of prior work that
+already does this, please open an issue — a correct negative is as useful to this
+project as a positive.
 
 ## License
 
