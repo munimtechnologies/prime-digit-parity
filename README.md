@@ -27,10 +27,14 @@ turned into a hunt for the structural cause of one specific, robust signal.
   `notes/*-prereg.md`), measured in a sealed sandbox, then graded against the
   locked prediction — so a surprising outcome can't be rationalized after the
   fact. Predictions that failed are reported as failures.
-- Current release: **v0.26.0**.
+- Current release: **v0.27.0**.
 - The four perturbation axes are complete; **[`SYNTHESIS.md`](SYNTHESIS.md)**
-  pulls the whole A–D map into one write-up. The enlarging axis (D) is now being
-  pushed to larger single primes to test how far its conclusion generalizes.
+  pulls the whole A–D map into one write-up. The enlarging axis (D) has since
+  been pushed to larger single primes and found a **crossover**: relaxing the
+  exponent cap at primes 11 and 13 no longer destroys the signature
+  (`AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). A further relaxation at
+  17, 19 and 23 has been run to test whether the ratio then converges
+  monotonically to the control; its graded write-up is in preparation.
 
 ## What has been found
 
@@ -86,7 +90,7 @@ The headline arc, in order:
     closed as a clean 2×2 — both thinning the evens out and relaxing one
     congruence kill the lag-2 quiet.
 11. **The signature tolerates neither thinning nor enlarging — it needs
-    *strict* μ², and that holds at every small prime so far tested.** Relaxing
+    *strict* μ², and that holds at every small prime tested.** Relaxing
     the squarefree exponent cap at a single prime (squarefree-except-2, admitting
     4·odd; -except-3, admitting 9·…) keeps every even integer yet still destroys
     the signature (quiet lag 5 / 8, ratios 1.14 / 0.77; pre-registered present →
@@ -97,32 +101,41 @@ The headline arc, in order:
     v0.26.0). With Axis C this closes a four-axis map: the lag-2 unique-quiet
     cancellation localizes to the strict squarefree (every exponent ≤ 1, no
     prime's class removed) sieve — a multiplicative indicator, even-admission
-    **and** strict congruences together, none alone, and no proper multiplicative
-    relative tested reproducing it. The complete map is written up in
-    [`SYNTHESIS.md`](SYNTHESIS.md). **Honest caveat:** the lag-2/median ratio
-    `r(p)` for squarefree-except-`p` is *monotone decreasing* —
-    1.142 → 0.773 → 0.342 → 0.169 for p = 2, 3, 5, 7 — and must converge to the
-    control value 0.015 as p → ∞ (the admitted class has density
-    1/p² − 1/p³ → 0). So the "destroyed at *every* prime" reading is in tension
-    with its own trend: for a large enough single relaxed prime the sieve is so
-    close to squarefree that the signature should return. Axis D3 (primes 11, 13)
-    is the pre-registered test of exactly this crossover.
+    **and** strict congruences together, none alone. The complete map is written
+    up in [`SYNTHESIS.md`](SYNTHESIS.md).
+12. **But the exponent-cap requirement is quantitative, not all-or-nothing: it
+    has a large-prime crossover.** The lag-2/median ratio `r(p)` for
+    squarefree-except-`p` is *monotone decreasing* — 1.142 → 0.773 → 0.342 →
+    0.169 for p = 2, 3, 5, 7 — and must converge to the control value 0.015 as
+    p → ∞ (the admitted class has density 1/p² − 1/p³ → 0). The pre-registered
+    test of whether `r(p)` crosses below the 0.1 detector threshold found that it
+    **does**: at the larger primes 11 and 13 the signature is **present** again
+    (r = 0.0777, 0.0603; pre-registered absent → **falsified**,
+    `AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). So the "destroyed at
+    *every* prime" reading is wrong — the destruction holds only **below a
+    prime-size crossover** sitting between 7 and 11, and the correct statement is
+    quantitative: a single-prime relaxation weakens the signature by an amount
+    that shrinks with `p`. A follow-up relaxing the cap at 17, 19 and 23 has been
+    run to ask whether `r(p)` then converges monotonically to the control; its
+    graded write-up is in preparation.
 
 ## Open / pending questions
 
 All four perturbation axes (which k-free; multiplicative origin vs. indicator;
 thinning; exponent-cap enlarging) have been run and graded against their locked
-predictions, and the enlarging axis has been replicated at primes 5 and 7
-(v0.26.0). One pre-registered experiment is **run and being written up**: Axis D3
-pushes the exponent-cap relaxation to the larger primes 11 and 13
-(`notes/axis-d3-large-prime-crossover-strict-mu2-prereg.md`), to decide whether
-the destruction holds at *every* single prime or whether the monotone ratio
-`r(p)` crosses below the 0.1 threshold — at which point the detector would score
-the signature **present** and the arc's conclusion would be restated as
-"destroyed only below a prime-size crossover." The other natural next
-directions — larger N, and a formal account of *why* the strict μ² congruence
-structure produces the lag-2 XOR cancellation — are open but not yet
-pre-registered. If you see a sharper discriminator, please open an issue.
+predictions, and the enlarging axis has a confirmed **crossover** at prime 11:
+relaxing the cap below it destroys the signature, above it preserves it
+(`AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md`, v0.27.0). Two sharper questions are
+now open and one is already running. **(a)** *Locate the exact crossover prime*:
+it is between 7 (absent) and 11 (present) for this detector and threshold.
+**(b)** *Characterise the convergence*: does `r(p)` fall monotonically to the
+control value 0.015 as `p → ∞`, or is there a second crossover / re-destruction
+at some larger prime? A pre-registered follow-up (relax at 17, 19, 23;
+`notes/axis-d4-crossover-convergence-strict-mu2-prereg.md`) has been run and its
+graded write-up is in preparation. The other natural directions — larger N, and a
+formal account of *why* the strict μ² congruence structure produces the lag-2 XOR
+cancellation — are open but not yet pre-registered. If you see a sharper
+discriminator, please open an issue.
 
 ## Results index
 
@@ -149,6 +162,7 @@ pre-registered. If you see a sharper discriminator, please open an issue.
 | `AXIS-D-EXPONENT-CAP-LAG-SIGNATURE-RESULTS.md` | Relaxing the exponent cap at one prime (2, 3) kills it too; needs *strict* μ² | v0.24.0 |
 | `FROM-SCRATCH-AXIS-D-REPRODUCTION.md` | Independent cold reproduction of the Axis-D exponent-cap result | v0.25.0 |
 | `AXIS-D2-GENERALITY-LAG-SIGNATURE-RESULTS.md` | Strict-μ² generalizes: relaxing the cap at 5 or 7 also kills it (ratio monotone decreasing) | v0.26.0 |
+| `AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md` | Relaxing the cap at a larger prime (11, 13) no longer kills it: a prime-size crossover | v0.27.0 |
 | `SYNTHESIS.md` | Four-axis synthesis: the signature localizes to the strict squarefree (μ²) sieve | — |
 
 ## Reproducing
@@ -191,10 +205,10 @@ correlation, and sieve structure (squarefree / B-free / multiplicative level
 sets) together, with a pre-registered discriminator that localizes the lag-2
 signature to the strict squarefree (μ²) congruence structure — needing a
 multiplicative indicator, even-admission, *and* strict congruences together,
-none alone, and tolerating neither thinning a congruence class nor relaxing the
-exponent cap at a single small prime. If you know of prior work that already does
-this, please open an issue — a correct negative is as useful to this project as a
-positive.
+none alone — and that measures how the signature scales with the size of a single
+relaxed prime, finding a prime-size crossover. If you know of prior work that
+already does this, please open an issue — a correct negative is as useful to this
+project as a positive.
 
 ## License
 
