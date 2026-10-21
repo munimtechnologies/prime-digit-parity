@@ -23,7 +23,7 @@ strict exponent cap — a requirement that holds at every small prime tested (2,
 It survives neither thinning a congruence class (Axis C) nor relaxing the exponent cap at
 a single such prime (Axis D). No proper multiplicative relative tested across the four
 axes reproduces it. This is a synthesis of the arc in this repository (releases
-v0.15.0–v0.29.0); the strongest result is a chain of decisive *negatives* around one
+v0.15.0–v0.30.0); the strongest result is a chain of decisive *negatives* around one
 robust positive. One clause of that conclusion turned out to be an artefact of testing
 only small primes: a pre-registered follow-up (Axis D3) found a **crossover** — the
 destruction ratio `r(p)` for squarefree-except-`p` is *monotone decreasing* in `p` and
@@ -35,7 +35,9 @@ crossover that sits between 7 and 11. A pre-registered follow-up (Axis D4, v0.28
 the signature stays present with `r(p)` still falling and no second crossover. Axis D5
 (v0.29.0) then made the convergence *quantitative*: the super-control excess obeys a
 density scaling law `r(p) − r_control ≈ 8·(1/p² − 1/p³)`, confirmed out-of-sample at
-29, 31 and 37.
+29, 31 and 37. Axis D6 (v0.30.0) then showed that law is **additive**: relaxing the cap
+at two primes at once perturbs the ratio by the *sum* of the single-prime densities,
+`r({p,q}) − r_control ≈ 8·(d(p) + d(q))`, with the same coefficient.
 
 ## 1. The object and why it is base-2 specific
 
@@ -72,7 +74,7 @@ the identical observable, null, stride split and scale-free detector.
 | **A — which k-free** | Is it squarefree specifically, or any `k`-free set? | cube-free, 4th-power-free | only **k = 2** keeps it | v0.18.0 |
 | **B — origin vs. indicator** | Does a multiplicative *origin* suffice, or is a multiplicative *indicator* needed? | Liouville λ = +1 level set (A028260) | **absent** (flat): needs an indicator | v0.20.0 |
 | **C — thinning** | Does removing residue classes keep it? | odd squarefree (A056911); squarefree coprime to 3 / 5 / 15 | **absent** both ways | v0.21.0 / v0.23.0 |
-| **D — enlarging** | Does *adding back* a square class keep it? | squarefree-except-2 (admit 4·odd); -except-3/5/7; and larger primes 11…37 | **absent** at 2, 3, 5, 7; **present** at 11–37 (crossover at 11, then monotone convergence obeying a density law) | v0.24.0 / v0.26.0 / v0.27.0 / v0.28.0 / v0.29.0 |
+| **D — enlarging** | Does *adding back* a square class keep it? | squarefree-except-2 (admit 4·odd); -except-3/5/7; larger primes 11…37; and two primes at once | **absent** at 2, 3, 5, 7; **present** at 11–37 (crossover at 11, then monotone convergence obeying an additive density law) | v0.24.0 … v0.30.0 |
 
 **Axis A (`KFREE-LAG-SIGNATURE-RESULTS.md`, v0.18.0).** Over `n ≤ 2×10^7` in base 2,
 squarefree is uniquely quiet at lag 2 (`|z| ≈ 2.9`, ratio ≈ 0.015 vs. the median of the
@@ -160,9 +162,21 @@ pre-registered band `[5, 11]`, and then held **out-of-sample** at the three new 
 primes 2…37 the coefficient stays near 8 (range 7.84–10.23). This upgrades the arc from
 qualitative (monotone convergence) to **predictive**:
 `r(p) − r_control ≈ 8·(1/p² − 1/p³)`. The strict-μ² localization is therefore not a hard
-wall but a smooth, density-controlled approach. A pre-registered follow-up (Axis D6)
-asks whether this density law is *additive* across two simultaneously relaxed primes;
-it is queued.
+wall but a smooth, density-controlled approach.
+
+**Axis D6 — the density law is additive (`AXIS-D6-DENSITY-ADDITIVITY-RESULTS.md`,
+v0.30.0).** The D5 law describes one prime at a time. Axis D6 relaxes the cap at **two**
+primes at once — `squarefree-except-{p,q}`, admitting both the `p²`- and `q²`-classes —
+for the pairs {17,19}, {23,29}, {31,37}. All three stay **present** (`r = 0.0639, 0.0382,
+0.0287`, no pair destroyed), and the two-prime coefficient
+`k({p,q}) = (r({p,q}) − r_control)/(d(p) + d(q))` lands inside the same pre-registered
+band `[5, 11]` for every pair (`k = 8.33, 7.91, 8.06`), sitting right on the `C ≈ 8` of
+the single-prime law. The overlap class `{p²q² m}` has density `∼ 1/(p²q²) ∼ 10⁻⁵–10⁻⁶`,
+negligible against `d(p) ∼ 10⁻³`, so the union's admitted density is `d(p) + d(q)` to
+first order — and the measured two-prime excess equals the summed single-prime prediction
+`8·(d(p) + d(q))` to within a few percent (`additivity_law_holds = True`). The density
+scaling law therefore **composes linearly**: distinct relaxed primes perturb the signature
+additively in the admitted density, with no detectable interaction.
 
 ## 3. The conclusion the four axes force
 
@@ -182,8 +196,9 @@ signature (a prime-size crossover between 7 and 11), and Axis D4 (v0.28.0) confi
 past the crossover the ratio converges monotonically to the control at 17, 19 and 23 with
 no second crossover. The requirement is therefore **quantitative, not all-or-nothing**; and
 the convergence is also quantitative — the density scaling law `r(p) − r_control ≈
-8·(1/p² − 1/p³)` is now confirmed out-of-sample at 29/31/37 (Axis D5, v0.29.0), and a
-pre-registered follow-up (Axis D6) tests whether it is additive across two relaxed primes.
+8·(1/p² − 1/p³)` is confirmed out-of-sample at 29/31/37 (Axis D5, v0.29.0), and Axis D6
+(v0.30.0) shows that law is **additive** across two simultaneously relaxed primes, with the
+same coefficient.
 
 ## 4. Prior art and why this is new
 
@@ -225,15 +240,16 @@ strict squarefree congruence structure — tolerating neither thinning a congrue
 nor relaxing the exponent cap at a single small prime, and distinguishing a
 multiplicative indicator from a mere multiplicative origin — nor tracks how the lag-2
 cancellation scales with the size of a single relaxed prime, finding a prime-size
-crossover, a monotone convergence past it, and a quantitative density scaling law for
-that convergence. Dietmann–Elsholtz–Shparlinski is the
+crossover, a monotone convergence past it, a quantitative density scaling law for
+that convergence, and that the law is additive across two relaxed primes.
+Dietmann–Elsholtz–Shparlinski is the
 closest in spirit (additive digit constraints meeting the multiplicative squarefree set),
 but its object is the squarefree integers and their digits, not the gaps between them, not
 the digit-sum parity of those gaps, and not serial correlation. The novelty is the
 *combination*, the pre-registered discriminator that localizes it, and the prime-size
-crossover with its density-controlled convergence; see `PRIOR-ART.md`. If you know of prior
-work that already does this, please open an issue — a correct negative is as useful to this
-project as a positive.
+crossover with its density-controlled, additive convergence; see `PRIOR-ART.md`. If you
+know of prior work that already does this, please open an issue — a correct negative is as
+useful to this project as a positive.
 
 ## 5. Honest limits
 
@@ -243,17 +259,19 @@ unique-quiet signature at this `N`," and in every negative the quiet lag is demo
 not 2 (it is 5, 7 or 8), so each absence is unambiguous rather than a power problem. The
 exponent-cap relaxation has now been graded at twelve single primes — 2 and 3 (Axis D,
 v0.24.0), 5 and 7 (Axis D2 generality replication, v0.26.0), 11 and 13 (Axis D3,
-v0.27.0), 17, 19, 23 (Axis D4, v0.28.0), and 29, 31, 37 (Axis D5, v0.29.0). The signature
-is absent at 2, 3, 5, 7 and **present** at 11, 13, 17, 19, 23, 29, 31, 37. We do **not**
-claim every exponent-cap relaxation at every prime behaves identically: the frozen ratio
-`r(p) = |z(2)| / median|z(k≠2)|` is *monotone decreasing* (1.142 → 0.773 → 0.342 → 0.169
-→ 0.0777 → 0.0603 → 0.0420 → 0.0366 → 0.0291 → 0.0239 → 0.0228 → 0.0208 for p = 2, 3, 5,
-7, 11, 13, 17, 19, 23, 29, 31, 37) and must converge to the control 0.015 as `p → ∞`, so
+v0.27.0), 17, 19, 23 (Axis D4, v0.28.0), and 29, 31, 37 (Axis D5, v0.29.0) — and at three
+two-prime pairs {17,19}, {23,29}, {31,37} (Axis D6, v0.30.0). The signature is absent at
+2, 3, 5, 7 and **present** at 11, 13, 17, 19, 23, 29, 31, 37 and at all three pairs. We do
+**not** claim every exponent-cap relaxation at every prime behaves identically: the frozen
+ratio `r(p) = |z(2)| / median|z(k≠2)|` is *monotone decreasing* (1.142 → 0.773 → 0.342 →
+0.169 → 0.0777 → 0.0603 → 0.0420 → 0.0366 → 0.0291 → 0.0239 → 0.0228 → 0.0208 for p = 2, 3,
+5, 7, 11, 13, 17, 19, 23, 29, 31, 37) and must converge to the control 0.015 as `p → ∞`, so
 a large enough single relaxed prime lets the signature return — the crossover Axis D3
 found and Axis D4 confirmed converges with no second crossover. A further relaxation at
 29, 31, 37 (Axis D5, v0.29.0) confirmed that the convergence continues and that it is
 quantitatively density-linear: `r(p) − r_control ≈ 8·(1/p² − 1/p³)`, with the coefficient
-held out-of-sample in `[5, 11]`. The discriminator is a fixed, frozen ratio test; it is
+held out-of-sample in `[5, 11]`; Axis D6 (v0.30.0) confirmed that law is additive across
+two relaxed primes. The discriminator is a fixed, frozen ratio test; it is
 possible a different discriminator would draw the boundary elsewhere, which is why the
 detector and every threshold are committed in code.
 
@@ -281,7 +299,8 @@ Relaxing the exponent cap at a single small prime (2, 3, 5, 7) destroys it; at t
 primes 11 through 37 the single-prime relaxation is small enough that the signature
 is present, and the destruction ratio falls monotonically toward the squarefree control
 with no second crossover, obeying the density scaling law `r(p) − r_control ≈
-8·(1/p² − 1/p³)` confirmed out-of-sample. It has earned **$0** and has **zero external
+8·(1/p² − 1/p³)` confirmed out-of-sample — a law that is also additive across two relaxed
+primes (Axis D6, v0.30.0). It has earned **$0** and has **zero external
 engagement**. Nothing here is a product or a claim of impact. It is offered in the open,
 for anyone to reproduce, extend or refute.
 
