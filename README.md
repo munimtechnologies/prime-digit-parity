@@ -27,7 +27,7 @@ turned into a hunt for the structural cause of one specific, robust signal.
   `notes/*-prereg.md`), measured in a sealed sandbox, then graded against the
   locked prediction — so a surprising outcome can't be rationalized after the
   fact. Predictions that failed are reported as failures.
-- Current release: **v0.29.0**.
+- Current release: **v0.30.0**.
 - The four perturbation axes are complete; **[`SYNTHESIS.md`](SYNTHESIS.md)**
   pulls the whole A–D map into one write-up. The enlarging axis (D) has since
   been pushed to larger single primes and found a **crossover**: relaxing the
@@ -38,7 +38,10 @@ turned into a hunt for the structural cause of one specific, robust signal.
   pre-registered follow-up at 29, 31 and 37 **confirmed that convergence
   continues and that the super-control excess obeys a quantitative density
   scaling law** `r(p) − r_control ≈ 8·(1/p² − 1/p³)`, validated out-of-sample
-  (`AXIS-D5-DENSITY-SCALING-LAW-RESULTS.md`, v0.29.0).
+  (`AXIS-D5-DENSITY-SCALING-LAW-RESULTS.md`, v0.29.0). A final follow-up relaxing
+  the cap at **two** primes at once then **confirmed that law is additive**: the
+  two-prime excess is the sum of the single-prime excesses, same coefficient
+  (`AXIS-D6-DENSITY-ADDITIVITY-RESULTS.md`, v0.30.0).
 
 ## What has been found
 
@@ -136,6 +139,16 @@ The headline arc, in order:
     at 29, 31, 37 (k = 7.86, 7.84, 8.42). This is the arc's first *predictive*
     law: `r(p) − r_control ≈ 8·(1/p² − 1/p³)`
     (`AXIS-D5-DENSITY-SCALING-LAW-RESULTS.md`, v0.29.0).
+14. **The density law is additive: two-prime relaxations perturb the signature
+    by the sum of the single-prime densities.** Relaxing the cap at **two** primes
+    at once (`squarefree-except-{p,q}`, pairs {17,19}, {23,29}, {31,37}) keeps the
+    signature **present** at all three (r = 0.0639, 0.0382, 0.0287, no pair
+    destroyed), and the two-prime coefficient
+    `k({p,q}) = (r({p,q}) − r_control)/(d(p) + d(q))` lands inside the same band
+    `[5, 11]` at all three pairs (k = 8.33, 7.91, 8.06) — the same C ≈ 8 as the
+    single-prime law. So the two-prime excess is the *sum* of the single-prime
+    excesses: the density scaling law composes linearly
+    (`AXIS-D6-DENSITY-ADDITIVITY-RESULTS.md`, v0.30.0).
 
 ## Open / pending questions
 
@@ -148,18 +161,16 @@ ratio **converges monotonically to the control** — confirmed at 17, 19 and 23
 with no second crossover (`AXIS-D4-CROSSOVER-CONVERGENCE-RESULTS.md`, v0.28.0) —
 and the convergence is now **quantitative**: the super-control excess obeys the
 density scaling law `r(p) − r_control ≈ 8·(1/p² − 1/p³)`, confirmed out-of-sample
-at 29, 31, 37 (`AXIS-D5-DENSITY-SCALING-LAW-RESULTS.md`, v0.29.0). Sharper
-questions remain. **(a)** *Locate the exact crossover prime*: it is between 7
-(absent) and 11 (present) for this detector and threshold. **(b)** *Is the
-density law additive?* The law is single-prime; a pre-registered follow-up
-(`notes/axis-d6-density-additivity-strict-mu2-prereg.md`) relaxes the cap at two
-primes at once (pairs {17,19}, {23,29}, {31,37}) and tests whether the two-prime
-excess is the *sum* of the single-prime excesses,
-`r({p,q}) − r_control ≈ 8·(d(p) + d(q))`; it is queued. **(c)** The other natural
-directions — larger N, and a formal account of *why* the strict μ² congruence
-structure produces the lag-2 XOR cancellation and *why* the coefficient is ≈ 8 —
-are open but not yet pre-registered. If you see a sharper discriminator, please
-open an issue.
+at 29, 31, 37 (`AXIS-D5-DENSITY-SCALING-LAW-RESULTS.md`, v0.29.0), **and that law
+is additive** — a two-prime relaxation perturbs the ratio by the sum of the
+single-prime densities with the same coefficient
+(`AXIS-D6-DENSITY-ADDITIVITY-RESULTS.md`, v0.30.0). Sharper questions remain.
+**(a)** *Locate the exact crossover prime*: it is between 7 (absent) and 11
+(present) for this detector and threshold. **(b)** The other natural directions —
+larger N, and a formal account of *why* the strict μ² congruence structure
+produces the lag-2 XOR cancellation and *why* the coefficient is ≈ 8 (now
+constrained to be linear and additive in `1/p² − 1/p³`) — are open but not yet
+pre-registered. If you see a sharper discriminator, please open an issue.
 
 ## Results index
 
@@ -189,6 +200,7 @@ open an issue.
 | `AXIS-D3-LARGE-PRIME-CROSSOVER-RESULTS.md` | Relaxing the cap at a larger prime (11, 13) no longer kills it: a prime-size crossover | v0.27.0 |
 | `AXIS-D4-CROSSOVER-CONVERGENCE-RESULTS.md` | Past the crossover, relaxing at 17/19/23 keeps it: the ratio converges monotonically to the control, no second crossover | v0.28.0 |
 | `AXIS-D5-DENSITY-SCALING-LAW-RESULTS.md` | Past the crossover the excess obeys a density scaling law `r(p) − r_control ≈ 8·(1/p² − 1/p³)`, confirmed out-of-sample at 29/31/37 | v0.29.0 |
+| `AXIS-D6-DENSITY-ADDITIVITY-RESULTS.md` | The density law is additive: a two-prime relaxation perturbs the ratio by the sum of the single-prime densities, same coefficient (k = 8.33/7.91/8.06) | v0.30.0 |
 | `SYNTHESIS.md` | Four-axis synthesis: the signature localizes to the strict squarefree (μ²) sieve | — |
 
 ## Reproducing
@@ -232,9 +244,10 @@ sets) together, with a pre-registered discriminator that localizes the lag-2
 signature to the strict squarefree (μ²) congruence structure — needing a
 multiplicative indicator, even-admission, *and* strict congruences together,
 none alone — and that measures how the signature scales with the size of a single
-relaxed prime, finding a prime-size crossover and a quantitative density scaling
-law for its convergence. If you know of prior work that already does this, please
-open an issue — a correct negative is as useful to this project as a positive.
+relaxed prime, finding a prime-size crossover, a quantitative density scaling law
+for its convergence, and that the law is additive across two relaxed primes. If
+you know of prior work that already does this, please open an issue — a correct
+negative is as useful to this project as a positive.
 
 ## License
 
