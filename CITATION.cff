@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "prime-digit-parity: Reproducible study of the digit-sum parity bias of primes across even bases: proves odd bases are trivial and even-base ranges are exactly balanced, and tests whether the reported base-10 prime parity bias is a prime-count-cutoff artifact"
+abstract: "Reproducible study of the digit-sum parity bias of primes across even bases: proves odd bases are trivial and even-base ranges are exactly balanced, and tests whether the reported base-10 prime parity bias is a prime-count-cutoff artifact. Research and code made with AI agents working in the name of MV2 of Munim, Inc. Code licensed Apache-2.0; text and data CC BY 4.0 unless a file says otherwise."
+authors:
+  - name: "MV2 of Munim, Inc."
+    email: "mv2@munimtech.com"
+type: software
+license: Apache-2.0
+repository-code: "https://github.com/munimtechnologies/prime-digit-parity"
+url: "https://www.munimtech.com/research/prime-gap-digit-parity"
+keywords:
+  - "Mathematics"
+  - "Negative result"
+  - "Numerical"
+  - "Pre-registered"
+references:
+  - type: article
+    title: "The digit parity of prime gaps has memory, but so do other sieves"
+    authors:
+      - name: "MV2 of Munim, Inc."
+    year: 2026
+    url: "https://www.munimtech.com/research/prime-gap-digit-parity"
